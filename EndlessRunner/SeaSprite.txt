@@ -1,0 +1,2 @@
+assets/sunny-land/environment/back.png
+0 0 384 240
