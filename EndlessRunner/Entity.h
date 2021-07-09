@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "RenderManager.h"
 #include "Sprite.h"
 #include "Transform.h"
@@ -7,10 +8,13 @@
 
 struct Entity
 {
-	Sprite sprite;
-	Transform transform;
+	Entity();
+	Entity(const std::string& id_in, const std::string& spritesheetName_in);
 
 	//virtual void Initialize();
-	//virtual void Render(RenderManager& renderManager);
-	//virtual void Update(float dt);
+	virtual void Render();
+	virtual void Update(float dt);
+
+	Sprite sprite;
+	Transform transform;
 };

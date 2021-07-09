@@ -9,7 +9,7 @@ Animation::Animation()
 
 }
 
-Animation::Animation(std::string animationName_in)
+Animation::Animation(const std::string& animationName_in)
 {
 	std::ifstream stream_;
 	stream_.open(animationName_in);
@@ -49,7 +49,7 @@ Animation::Animation(std::string animationName_in)
 	}
 }
 
-Animation UpdateSprite(Animation animation_in)
+Animation UpdateSprite(Animation& animation_in)
 {
 	if (animation_in.animationType == Type::Single)
 	{

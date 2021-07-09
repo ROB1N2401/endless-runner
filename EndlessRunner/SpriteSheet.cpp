@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 
-SpriteSheet ReadSpritesheet(std::string spritesheetName_in)
+SpriteSheet ReadSpritesheet(const std::string& spritesheetName_in)
 {
 	std::ifstream stream_;
 	stream_.open(spritesheetName_in);

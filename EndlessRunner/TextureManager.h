@@ -9,14 +9,16 @@ class TextureManager
 	public: 
 		static TextureManager* Instance() { return m_Instance = (m_Instance != nullptr) ? m_Instance : new TextureManager();};
 
-		bool Load(std::string id_in, std::string filename_in);
-		void Remove(std::string id_in);
-		void Clean();
+		bool Load(const std::string& id_in, const std::string& spritesheetName_in);
+		void Remove(const std::string& id_in);
+		void Clear();
+		SDL_Texture* GetTexture(const std::string& id_in);
 
-		void Draw(std::string id_in, int x_in, int y_in, int width_in, int height_in);
+		void Draw(const std::string& id_in, const int x_in, const int y_in, const int width_in, const int height_in);
+
+		std::map<std::string, SDL_Texture*> TextureMap;
 
 	private:
 		TextureManager() {}
-		std::map<std::string, SDL_Texture*> m_TextureMap;
 		static TextureManager* m_Instance;
 };

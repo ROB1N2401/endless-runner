@@ -15,7 +15,7 @@ enum class Type
 struct Animation
 {
 	Animation();
-	Animation(std::string animationName_in);
+	Animation(const std::string& animationName_in);
 
 	//In the animation .txt files: 1 for single, 2 for loop, 3 for pingpong
 	std::vector<Sprite> frames;
@@ -29,4 +29,4 @@ struct Animation
 	Type animationType = Type::Single;
 };
 
-Animation UpdateSprite(Animation animation_in);
+Animation UpdateSprite(Animation& animation_in);

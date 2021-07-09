@@ -11,4 +11,4 @@ struct SpriteSheet
 	std::vector<Sprite> sprites;
 };
 
-SpriteSheet ReadSpritesheet(std::string spritesheetName_in);
+SpriteSheet ReadSpritesheet(const std::string& spritesheetName_in);

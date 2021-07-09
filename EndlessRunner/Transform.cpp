@@ -6,6 +6,8 @@ Transform::Transform()
 	scale = Helium::Vector2(1.0f, 1.0f);
 }
 
+Transform::~Transform() {}
+
 void Transform::SetPosition(const float x, const float y)
 {
 	position.x_ = x;
@@ -30,12 +32,12 @@ void Transform::ChangeScale(const float x, const float y)
 	scale.y_ = +y;
 }
 
-Helium::Vector2 Transform::GetPosition()
+Helium::Vector2 Transform::GetPosition() const
 {
 	return position;
 }
 
-Helium::Vector2 Transform::GetScale()
+Helium::Vector2 Transform::GetScale() const
 {
 	return scale;
 }

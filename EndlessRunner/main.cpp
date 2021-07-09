@@ -2,6 +2,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "SdlManager.h"
+#include "TextureManager.h"
 #include "Game.h"
 
 int main(int argc, char* args[])
@@ -11,6 +12,8 @@ int main(int argc, char* args[])
 
 	Game game;
 	game.Run();
+
+	TextureManager::Instance()->Clear();
 	
 	return 0;
 }
