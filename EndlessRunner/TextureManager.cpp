@@ -5,15 +5,15 @@
 
 TextureManager* TextureManager::m_Instance = nullptr;
 
-bool TextureManager::Load(const std::string& id_in, const std::string& spritesheetName_in)
+bool TextureManager::Load(const std::string& id_in, const std::string& imageFileName_in)
 {
 	if (TextureMap.count(id_in) > 0)
 		return true;
 
-	SDL_Surface* surface = IMG_Load(spritesheetName_in.c_str());
+	SDL_Surface* surface = IMG_Load(imageFileName_in.c_str());
 	if (surface == nullptr)
 	{
-		SDL_Log("Failed to create a surface out of sprite: %s, %s", spritesheetName_in.c_str(), SDL_GetError());
+		SDL_Log("Failed to create a surface out of sprite: %s, %s", imageFileName_in.c_str(), SDL_GetError());
 		return false;
 	}
 

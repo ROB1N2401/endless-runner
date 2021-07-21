@@ -6,17 +6,26 @@
 
 Animation::Animation()
 {
-
+	isFirstPlayback = true;
+	lastTimeUpdated = 0;
+	currentFrame = 0;
+	framesAmount = 0;
+	direction = 1;
 }
 
-Animation::Animation(const std::string& animationName_in)
+Animation::Animation(const std::string& texture_id_in, const std::string& animationName_in)
 {
+	isFirstPlayback = true;
+	currentFrame = 0;
+	lastTimeUpdated = 0;
+	direction = 1;
+
 	std::ifstream stream_;
 	stream_.open(animationName_in);
 	Animation animation_;
 
 	getline(stream_, spritesheetFileName);
-	spritesheet = ReadSpritesheet(spritesheetFileName);
+	spritesheet = ReadSpritesheet(texture_id_in, spritesheetFileName);
 
 	std::string type_info_;
 	std::getline(stream_, type_info_);
@@ -49,44 +58,83 @@ Animation::Animation(const std::string& animationName_in)
 	}
 }
 
-Animation UpdateSprite(Animation& animation_in)
+void Animation::SwitchFrames()
 {
-	if (animation_in.animationType == Type::Single)
+	currentFrame += direction;
+
+	switch (animationType)
 	{
-		if (animation_in.timesPlayed == 0)
-		{
-			animation_in.currentFrame += animation_in.direction;
+		case Type::Single: 
+			if (isFirstPlayback && currentFrame == framesAmount - 1)
+				isFirstPlayback = false;
+			break;
 
-			if (animation_in.currentFrame == animation_in.framesAmount - 1)
-			{
-				animation_in.currentFrame = 0;
-				animation_in.timesPlayed++;
-			}
-		}
+		case Type::Loop:
+			if (currentFrame == framesAmount - 1)
+				currentFrame = 0;
+			break;
+
+		case Type::Pingpong:
+			if (currentFrame == 0 || currentFrame == framesAmount - 1)
+				direction = -direction;
+			break;
+
+		
 	}
+}
 
-	else if (animation_in.animationType == Type::Loop)
+void Animation::Update()
+{
+	Uint32 ticks = SDL_GetTicks();
+	Uint32 currentTime = ticks / animationSpeed;
+
+	if (currentTime > lastTimeUpdated)
 	{
-		animation_in.currentFrame += animation_in.direction;
+		SwitchFrames();
 
-		if (animation_in.currentFrame == animation_in.framesAmount - 1)
-		{
-			animation_in.currentFrame = 0;
-			animation_in.timesPlayed++;
-		}
+		lastTimeUpdated = currentTime;
 	}
+}
 
-	else if (animation_in.animationType == Type::Pingpong)
-	{
-		animation_in.currentFrame += animation_in.direction;
 
-		if (animation_in.currentFrame == 0 || animation_in.currentFrame == animation_in.framesAmount - 1)
-		{
-			animation_in.timesPlayed++;
-			animation_in.direction = -animation_in.direction;
-		}
-	}
-
-	return animation_in;
-};
+//Animation Animation::SwitchFrames(Animation& animation_in)
+//{
+//	if (animation_in.animationType == Type::Single)
+//	{
+//		if (animation_in.timesPlayed == 0)
+//		{
+//			animation_in.currentFrame += animation_in.direction;
+//
+//			if (animation_in.currentFrame == animation_in.framesAmount - 1)
+//			{
+//				animation_in.currentFrame = 0;
+//				animation_in.timesPlayed++;
+//			}
+//		}
+//	}
+//
+//	else if (animation_in.animationType == Type::Loop)
+//	{
+//		animation_in.currentFrame += animation_in.direction;
+//
+//		if (animation_in.currentFrame == animation_in.framesAmount - 1)
+//		{
+//			animation_in.currentFrame = 0;
+//			animation_in.timesPlayed++;
+//		}
+//	}
+//
+//	else if (animation_in.animationType == Type::Pingpong)
+//	{
+//		animation_in.currentFrame += animation_in.direction;
+//
+//		if (animation_in.currentFrame == 0 || animation_in.currentFrame == animation_in.framesAmount - 1)
+//		{
+//			animation_in.timesPlayed++;
+//			animation_in.direction = -animation_in.direction;
+//		}
+//	}
+//
+//	return animation_in;
+//}
 

@@ -7,8 +7,3 @@ Sea::Sea()
 }
 
 Sea::~Sea() {}
-
-void Sea::Render()
-{
-	RenderManager::Instance()->Render(sprite, transform);
-}

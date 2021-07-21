@@ -8,7 +8,6 @@
 struct Sprite
 {
 	Sprite();
-	Sprite(const std::string& spritesheetName_in);
 	Sprite(const std::string& id_in, const std::string& spritesheetName_in);
 	int x, y;
 	int w, h;
@@ -16,5 +15,6 @@ struct Sprite
 	SDL_Rect source;
 
 	void SetTexture(const std::string& id_in);
+	void SetSource(int w_in, int h_in);
 	void SetSource(int x_in, int y_in, int w_in, int h_in);
 };

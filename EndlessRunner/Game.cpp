@@ -17,39 +17,44 @@ Game::~Game()
 {
 	printf("Destroy Game\n");
 	delete sea;
+	delete forest;
+	delete player;
 }
 
 void Game::Init()
 {
 	screen.Init();
 	RenderManager::Instance()->Init(screen);
-	TextureManager::Instance()->Load("forest", "ForestSprite.txt");
-	//TextureManager::Instance()->Load("sea", "SeaSprite.txt");
+
+	TextureManager::Instance()->Load("forest", "assets/sunny-land/environment/middle.png");
+	TextureManager::Instance()->Load("sea", "assets/sunny-land/environment/back.png");
+	TextureManager::Instance()->Load("player_run", "assets/sunny-land/player-run.png");
+
+
+	player = new Player();
 	sea = new Sea();
+	forest = new Forest();
 }
 
 void Game::Render()
 {
+	RenderManager::Instance()->Clear(255, 255, 255, 255);
 
+	sea->Render();
+	forest->Render();
+	player->Render();
+
+	RenderManager::Instance()->Present();
 }
 
 void Game::Update(const float dt)
 {
-
+	player->Update(dt);
 }
 
 void Game::Run()
 {
 	Init();
-
-	//SDL_Renderer* renderer_ = SDL_CreateRenderer(screen.window, -1, 0);
-
-	Uint32 stored_deciseconds_ = 0;
-
-	Animation running_("RunningAnimation.txt");
-	SDL_Surface* surface2_ = IMG_Load(running_.spritesheet.imageFileName.c_str());
-	SDL_Texture* texture2_ = SDL_CreateTextureFromSurface(RenderManager::Instance()->GetRenderer(), surface2_);
-	SDL_Rect dstrect_player_ = SDL_Rect{ 0, 500, 100, 100, };
 
 	SDL_SetRenderDrawColor(RenderManager::Instance()->GetRenderer(), 255, 255, 255, 255);
 	SDL_RenderClear(RenderManager::Instance()->GetRenderer());
@@ -64,24 +69,8 @@ void Game::Run()
 			}
 		}
 
-		Uint32 ticks_ = SDL_GetTicks();
-		Uint32 deciseconds_ = ticks_ / 100;
-
-		if (deciseconds_ > stored_deciseconds_)
-		{
-			running_ = UpdateSprite(running_);
-
-			stored_deciseconds_ = deciseconds_;
-		}
-
-		RenderManager::Instance()->Clear(255, 255, 255, 255);
-
-		//TextureManager::Instance()->Draw("sea", 0, 0, 176, 368);
-		sea->Render();
-		TextureManager::Instance()->Draw("forest", 0, 0, 384, 240);
-		SDL_RenderCopy(RenderManager::Instance()->GetRenderer(), texture2_, &running_.frames[running_.currentFrame].source, &dstrect_player_);
-
-		RenderManager::Instance()->Present();
+		Update(deltaTime);
+		Render();
 	}
 }
 

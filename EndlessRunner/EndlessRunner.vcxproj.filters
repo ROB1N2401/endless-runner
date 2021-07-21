@@ -16,6 +16,12 @@
     <Filter Include="Entities">
       <UniqueIdentifier>{ddb26f76-9942-4b60-a97d-2180af57b1bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Header Files">
+      <UniqueIdentifier>{483c548e-44de-4e50-9b84-f194308c7f39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Source Files">
+      <UniqueIdentifier>{6e1250d4-29ff-4b2b-92eb-1125c273bad4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SdlManager.cpp">
@@ -56,7 +62,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sea.cpp">
-      <Filter>Entities</Filter>
+      <Filter>Entities\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Forest.cpp">
+      <Filter>Entities\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Entities\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +109,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sea.h">
-      <Filter>Entities</Filter>
+      <Filter>Entities\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Forest.h">
+      <Filter>Entities\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Entities\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

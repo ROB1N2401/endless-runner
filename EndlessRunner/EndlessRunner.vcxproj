@@ -156,10 +156,12 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Forest.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HeliumCollision.cc" />
     <ClCompile Include="HeliumMath.cc" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="SdlManager.cpp" />
@@ -171,8 +173,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Forest.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Sea.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Sprite.h" />

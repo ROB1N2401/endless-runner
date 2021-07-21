@@ -6,8 +6,9 @@
 
 //A base for the most of other structes 
 
-struct Entity
+class Entity
 {
+public:
 	Entity();
 	Entity(const std::string& id_in, const std::string& spritesheetName_in);
 
@@ -15,6 +16,7 @@ struct Entity
 	virtual void Render();
 	virtual void Update(float dt);
 
+protected:
 	Sprite sprite;
 	Transform transform;
 };
