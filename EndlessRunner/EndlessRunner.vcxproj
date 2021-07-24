@@ -156,16 +156,16 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Forest.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HeliumCollision.cc" />
     <ClCompile Include="HeliumMath.cc" />
+    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Parallax.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="SdlManager.cpp" />
-    <ClCompile Include="Sea.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
@@ -173,11 +173,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Forest.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Parallax.h" />
+    <ClInclude Include="Layer.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Sea.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="HeliumCollision.h" />
@@ -187,16 +187,6 @@
     <ClInclude Include="SdlManager.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Transform.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CherryAnimation.txt" />
-    <Text Include="CherrySprite.txt" />
-    <Text Include="DeathAnimation.txt" />
-    <Text Include="DeathSprite.txt" />
-    <Text Include="RunningAnimation.txt" />
-    <Text Include="RunningSprite.txt" />
-    <Text Include="SeaSprite.txt" />
-    <Text Include="ForestSprite.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,13 +15,13 @@ void RenderManager::Init(Screen& screen_in)
 
 void RenderManager::Render(const Sprite& sprite_in, const Transform& transform_in)
 {	
-	SDL_Rect srcRect = sprite_in.source;
+	SDL_Rect srcRect = sprite_in.GetSource();
 	auto position = transform_in.GetPosition();
 	auto scale = transform_in.GetScale();
-	float w = sprite_in.source.w * scale.x_;
-	float h = sprite_in.source.h * scale.y_;
-	SDL_Rect dstRect = { position.x_, position.y_, w, h };
-	SDL_RenderCopy(m_renderer, sprite_in.texture, &srcRect, &dstRect);
+	int w = static_cast<int>(sprite_in.GetSource().w * scale.x_);
+	int h = static_cast<int>(sprite_in.GetSource().h * scale.y_);
+	SDL_Rect dstRect = { static_cast<int>(position.x_), static_cast<int>(position.y_), w, h };
+	SDL_RenderCopy(m_renderer, sprite_in.GetTexture(), &srcRect, &dstRect);
 }
 
 void RenderManager::Clear(int r, int g, int b, int a)

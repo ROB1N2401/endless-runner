@@ -1,11 +1,5 @@
-#include <iostream>
-#include <fstream>
-#include "SDL.h"
-#include "SDL_image.h"
 #include "RenderManager.h"
 #include "TextureManager.h"
-#include "SpriteSheet.h"
-#include "Screen.h"
 #include "Game.h"
 
 Game::Game() : screen(this)
@@ -16,9 +10,10 @@ Game::Game() : screen(this)
 Game::~Game()
 {
 	printf("Destroy Game\n");
-	delete sea;
-	delete forest;
+	delete background;
 	delete player;
+
+	TextureManager::Instance()->Clear();
 }
 
 void Game::Init()
@@ -26,31 +21,33 @@ void Game::Init()
 	screen.Init();
 	RenderManager::Instance()->Init(screen);
 
-	TextureManager::Instance()->Load("forest", "assets/sunny-land/environment/middle.png");
-	TextureManager::Instance()->Load("sea", "assets/sunny-land/environment/back.png");
-	TextureManager::Instance()->Load("player_run", "assets/sunny-land/player-run.png");
-
+	TextureManager::Instance()->Load("player_run", "Assets/Spritesheets/player-run.png");
+	TextureManager::Instance()->Load("layer_1", "Assets/Parallax/hills-layer-01.png");
+	TextureManager::Instance()->Load("layer_2", "Assets/Parallax/hills-layer-02.png");
+	TextureManager::Instance()->Load("layer_3", "Assets/Parallax/hills-layer-03.png");
+	TextureManager::Instance()->Load("layer_4", "Assets/Parallax/hills-layer-04.png");
+	TextureManager::Instance()->Load("layer_5", "Assets/Parallax/hills-layer-05.png");
 
 	player = new Player();
-	sea = new Sea();
-	forest = new Forest();
+	background = new Parallax(4.0f);
+}
+
+void Game::Update(const float dt)
+{
+	background->Update();
+	player->Update(dt);
 }
 
 void Game::Render()
 {
 	RenderManager::Instance()->Clear(255, 255, 255, 255);
 
-	sea->Render();
-	forest->Render();
+	background->Render();
 	player->Render();
 
 	RenderManager::Instance()->Present();
 }
 
-void Game::Update(const float dt)
-{
-	player->Update(dt);
-}
 
 void Game::Run()
 {

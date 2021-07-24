@@ -1,20 +1,17 @@
 #pragma once
 #include "Screen.h"
-#include "Animation.h"
 #include "Sprite.h"
+#include "Parallax.h"
 
 #include "Player.h"
-#include "Forest.h"
-#include "Sea.h"
 
 #define deltaTime 0.16f
 
 class Game
 {
 	Screen screen;
-	Sea* sea;
-	Forest* forest;
 	Player* player;
+	Parallax* background;
 
 	void Init();
 	void Render();

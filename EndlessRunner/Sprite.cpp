@@ -10,15 +10,24 @@ Sprite::Sprite()
 	source = SDL_Rect{ x, y, w, h };
 }
 
-Sprite::Sprite(const std::string& id_in, const std::string& spritesheetName_in)
+Sprite::Sprite(const std::string& id_in)
+{
+	texture = TextureManager::Instance()->GetTexture(id_in);
+
+	x = 0; y = 0; w = 0; h = 0;
+	source = SDL_Rect{ x, y, w, h };
+}
+
+Sprite::Sprite(const std::string& id_in, const std::string& spriteDataFileName_in)
+{
+	texture = TextureManager::Instance()->GetTexture(id_in);
+	SetSource(spriteDataFileName_in);
+}
+
+void Sprite::SetSource(const std::string& spriteDataFileName_in)
 {
 	std::ifstream stream;
-	stream.open(spritesheetName_in);
-
-	std::string fileName;
-	std::getline(stream, fileName);
-
-	texture = TextureManager::Instance()->GetTexture(id_in);
+	stream.open(spriteDataFileName_in);
 
 	std::string line;
 	std::getline(stream, line);

@@ -7,7 +7,6 @@ SpriteSheet ReadSpritesheet(const std::string& texture_id_in, const std::string&
 	std::ifstream stream_;
 	stream_.open(spritesheetName_in);
 	SpriteSheet spritesheet_;
-	getline(stream_, spritesheet_.imageFileName);
 	std::string line_;
 	while (std::getline(stream_, line_))
 	{
@@ -16,7 +15,7 @@ SpriteSheet ReadSpritesheet(const std::string& texture_id_in, const std::string&
 		std::string word;
 		while (ss >> word) words.push_back(word);
 		if (words.size() != 4) continue;
-		Sprite sprite = Sprite(texture_id_in, spritesheetName_in);
+		Sprite sprite = Sprite(texture_id_in);
 		sprite.SetSource(std::stoi(words[0]), std::stoi(words[1]), std::stoi(words[2]), std::stoi(words[3]));
 		spritesheet_.sprites.push_back(sprite);
 	}

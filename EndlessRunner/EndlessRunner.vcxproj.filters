@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Entities">
       <UniqueIdentifier>{ddb26f76-9942-4b60-a97d-2180af57b1bc}</UniqueIdentifier>
     </Filter>
@@ -21,6 +17,15 @@
     </Filter>
     <Filter Include="Entities\Source Files">
       <UniqueIdentifier>{6e1250d4-29ff-4b2b-92eb-1125c273bad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parallax">
+      <UniqueIdentifier>{48939cb1-b9db-4aa4-a255-b7ff091d63db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parallax\Header FIles">
+      <UniqueIdentifier>{fd7e9c8b-51e2-4b14-9272-535610cbfec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parallax\Source Files">
+      <UniqueIdentifier>{ff44574f-469c-43a4-bdb8-857a5d70ab70}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,17 +63,17 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sea.cpp">
-      <Filter>Entities\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Forest.cpp">
-      <Filter>Entities\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Entities\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Parallax\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parallax.cpp">
+      <Filter>Parallax\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,46 +107,20 @@
     <ClInclude Include="Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sea.h">
-      <Filter>Entities\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Forest.h">
-      <Filter>Entities\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Entities\Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="DeathSprite.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="RunningAnimation.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="RunningSprite.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="CherryAnimation.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="CherrySprite.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="DeathAnimation.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="SeaSprite.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="ForestSprite.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <ClInclude Include="Entity.h">
+      <Filter>Entities\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Parallax\Header FIles</Filter>
+    </ClInclude>
+    <ClInclude Include="Parallax.h">
+      <Filter>Parallax\Header FIles</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

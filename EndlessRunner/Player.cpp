@@ -2,9 +2,9 @@
 
 Player::Player()
 {
-	m_animation = new Animation("player_run", "RunningAnimation.txt");
-	transform.SetPosition(0, 460);
-	transform.SetScale(4, 4);
+	m_animation = new Animation("player_run", "Resources/RunningAnimation.txt");
+	transform.SetPosition(0, 400);
+	transform.SetScale(3, 3);
 }
 
 Player::~Player() { delete m_animation; }

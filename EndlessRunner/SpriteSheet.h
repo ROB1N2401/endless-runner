@@ -7,7 +7,6 @@
 
 struct SpriteSheet
 {
-	std::string imageFileName;
 	std::vector<Sprite> sprites;
 };
 

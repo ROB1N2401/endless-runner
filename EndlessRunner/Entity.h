@@ -16,7 +16,6 @@ public:
 	virtual void Render();
 	virtual void Update(float dt);
 
-protected:
 	Sprite sprite;
 	Transform transform;
 };
