@@ -159,6 +159,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HeliumCollision.cc" />
     <ClCompile Include="HeliumMath.cc" />
+    <ClCompile Include="KeyCode.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parallax.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="KeyCode.h" />
     <ClInclude Include="Parallax.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Player.h" />

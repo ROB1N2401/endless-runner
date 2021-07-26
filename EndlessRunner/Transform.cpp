@@ -20,6 +20,11 @@ void Transform::SetScale(const float x, const float y)
 	scale.y_ = y;
 }
 
+void Transform::ChangePosition(Helium::Vector2& vector)
+{
+	position = position + vector;
+}
+
 void Transform::ChangePosition(const float x, const float y)
 {
 	position.x_ += x;

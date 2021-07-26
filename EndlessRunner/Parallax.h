@@ -9,7 +9,7 @@ public:
 	Parallax(float baseSpeed_in);
 	~Parallax();
 
-	void Update();
+	void Update(const float dt);
 	void Render();
 
 private:

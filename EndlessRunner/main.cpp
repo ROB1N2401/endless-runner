@@ -12,8 +12,6 @@ int main(int argc, char* args[])
 
 	Game game;
 	game.Run();
-
-	TextureManager::Instance()->Clear();
 	
 	return 0;
 }

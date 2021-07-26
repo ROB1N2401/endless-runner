@@ -9,118 +9,136 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Entities">
-      <UniqueIdentifier>{ddb26f76-9942-4b60-a97d-2180af57b1bc}</UniqueIdentifier>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{4e76118f-8619-41a5-b039-344673285351}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Header Files">
-      <UniqueIdentifier>{483c548e-44de-4e50-9b84-f194308c7f39}</UniqueIdentifier>
+    <Filter Include="Header Files\Parallax">
+      <UniqueIdentifier>{4c8f8253-2f9f-4e67-a48c-dcdfa08e014a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Source Files">
-      <UniqueIdentifier>{6e1250d4-29ff-4b2b-92eb-1125c273bad4}</UniqueIdentifier>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{856f4eeb-c42e-4468-955e-93aa4f80aa3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Parallax">
-      <UniqueIdentifier>{48939cb1-b9db-4aa4-a255-b7ff091d63db}</UniqueIdentifier>
+    <Filter Include="Source Files\Parallax">
+      <UniqueIdentifier>{e8dc2713-2209-4c09-b9a4-dfbd23813701}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Parallax\Header FIles">
-      <UniqueIdentifier>{fd7e9c8b-51e2-4b14-9272-535610cbfec0}</UniqueIdentifier>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{872d522f-a08e-4844-b2f6-20e0774c1223}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Parallax\Source Files">
-      <UniqueIdentifier>{ff44574f-469c-43a4-bdb8-857a5d70ab70}</UniqueIdentifier>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{7a8125f8-e949-4648-a2f8-3519e709c1e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems">
+      <UniqueIdentifier>{f77147c7-1ee7-443d-b498-975d242aeff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Systems">
+      <UniqueIdentifier>{c2af9366-26fd-4bbe-ad39-7411e108e241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{3bc007b6-52c5-4d29-bbec-0ada47d4d686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{13314325-a4a2-481a-8432-8ba2dbd4d1ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SdlManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Screen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HeliumCollision.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HeliumMath.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp">
-      <Filter>Entities\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Entities\Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Layer.cpp">
-      <Filter>Parallax\Source Files</Filter>
+      <Filter>Source Files\Parallax</Filter>
     </ClCompile>
     <ClCompile Include="Parallax.cpp">
-      <Filter>Parallax\Source Files</Filter>
+      <Filter>Source Files\Parallax</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="HeliumCollision.cc">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="HeliumMath.cc">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyCode.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderManager.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="SdlManager.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteSheet.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SdlManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Screen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HeliumCollision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HeliumMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteSheet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Entities\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Entities\Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
-      <Filter>Parallax\Header FIles</Filter>
+      <Filter>Header Files\Parallax</Filter>
     </ClInclude>
     <ClInclude Include="Parallax.h">
-      <Filter>Parallax\Header FIles</Filter>
+      <Filter>Header Files\Parallax</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="HeliumCollision.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="HeliumMath.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCode.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="SdlManager.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteSheet.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@ public:
 	void SetPosition(const float x, const float y);
 	void SetScale(const float x, const float y);
 
+	void ChangePosition(Helium::Vector2& vector);
 	void ChangePosition(const float x, const float y);
 	void ChangeScale(const float x, const float y);
 

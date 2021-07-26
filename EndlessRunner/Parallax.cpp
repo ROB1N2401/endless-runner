@@ -11,13 +11,12 @@ m_layer_5(1.0f, "layer_5", "Resources/ParallaxLayerData.txt")
 
 Parallax::~Parallax()
 {
-	delete[] m_layers;
 }
 
-void Parallax::Update()
+void Parallax::Update(const float dt)
 {
 	for (int i = 0; i < m_layersAmount; i++)
-		m_layers[i]->Update(m_baseSpeed);
+		m_layers[i]->Update(m_baseSpeed * dt);
 }
 
 void Parallax::Render()
