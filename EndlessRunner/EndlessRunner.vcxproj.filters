@@ -57,9 +57,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="HeliumCollision.cc">
-      <Filter>Source Files\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="HeliumMath.cc">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
@@ -90,6 +87,12 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -106,9 +109,6 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="HeliumCollision.h">
-      <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="HeliumMath.h">
       <Filter>Header Files\Systems</Filter>
@@ -138,6 +138,12 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

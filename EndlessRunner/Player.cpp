@@ -3,15 +3,26 @@
 Player::Player()
 {
 	m_state = new RunningState();
-	m_animation = m_state->stateAnimation;
+
+	animation = m_state->stateAnimation;
+
 	transform.SetPosition(0, defaultPos);
 	transform.SetScale(3, 3);
+	
+	int x = transform.GetPosition().x_;
+	int y = transform.GetPosition().y_;
+	int w = 18 * transform.GetScale().x_;
+	int h = 22 * transform.GetScale().y_;
+	int x_offset = 6 * transform.GetScale().x_;
+	int y_offset = 10 * transform.GetScale().y_;
+	collider = new Collider(x, y, w, h, x_offset, y_offset);
 }
 
 Player::~Player()
 {
 	delete m_state;
-	delete m_animation;
+	delete animation;
+	delete collider;
 }
 
 void Player::OnKeyUp(KeyCode key)
@@ -28,12 +39,13 @@ void Player::OnKeyUp(KeyCode key)
 
 void Player::Render()
 {
-	RenderManager::Instance()->Render(m_animation->frames[m_animation->currentFrame], transform);
+	RenderManager::Instance()->Render(animation->frames[animation->currentFrame], transform);
+	RenderManager::Instance()->Render(&collider->rect);
 }
 
 void Player::Update(const float dt)
 {
-	//m_animation->Update();
+	collider->SetPosition(this->transform.GetPosition().x_, this->transform.GetPosition().y_);
 	PlayerState* state = m_state->Update(*this, dt);
 	if (state != NULL)
 	{
@@ -56,7 +68,7 @@ RunningState::~RunningState() {}
 void RunningState::Enter(Player& player_in)
 {
 	player_in.transform.SetPosition(0, Player::defaultPos);
-	player_in.SetAnimation(stateAnimation);
+	player_in.animation = stateAnimation;
 
 }
 
@@ -70,11 +82,11 @@ PlayerState* RunningState::OnKeyUp(Player& player_in, KeyCode key)
 
 PlayerState* RunningState::Update(Player& player_in, const float dt)
 {
-	player_in.GetAnimation()->Update();
+	player_in.animation->Update();
 	return nullptr;
 }
 
-JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -50.0f)
+JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -75.0f)
 {
 	isFallingDown = false;
 	stateAnimation = new Animation(1000, "player_jump", "Resources/JumpingAnimation.txt");
@@ -84,7 +96,7 @@ JumpingState::~JumpingState() {}
 
 void JumpingState::Enter(Player& player_in)
 {
-	player_in.SetAnimation(stateAnimation);
+	player_in.animation = stateAnimation;
 }
 
 PlayerState* JumpingState::OnKeyUp(Player& player_in, KeyCode key) { return nullptr; }
@@ -99,7 +111,7 @@ PlayerState* JumpingState::Update(Player& player_in, const float dt)
 
 	if (!isFallingDown && m_velocity.y_ > 0)
 	{
-		player_in.GetAnimation()->SwitchFrames();
+		player_in.animation->SwitchFrames();
 		isFallingDown = true;
 	}
 

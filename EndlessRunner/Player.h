@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "KeyCode.h"
 #include "Animation.h"
+#include "CollisionManager.h"
 
 class PlayerState;
 class RunningState;
@@ -17,14 +18,10 @@ public:
 	virtual void Render() final;
 	virtual void Update(const float dt) final;
 
-	Animation* GetAnimation() { return m_animation; };
-	void SetAnimation(Animation* animation_in) { m_animation = animation_in; };
-
     static const int defaultPos = 395;
 
 private:
 	PlayerState* m_state;
-	Animation* m_animation;
 };
 
 

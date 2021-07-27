@@ -14,6 +14,7 @@ struct RenderManager
 	SDL_Renderer* GetRenderer();
 	void Init(Screen& screen_in);
 	void Render(const Sprite& sprite_in, const Transform& transform_in);
+	void Render(const SDL_Rect* rect_in);
 	void Clear(int r, int g, int b, int a);
 	void Present();
 

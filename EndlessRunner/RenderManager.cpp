@@ -24,6 +24,12 @@ void RenderManager::Render(const Sprite& sprite_in, const Transform& transform_i
 	SDL_RenderCopy(m_renderer, sprite_in.GetTexture(), &srcRect, &dstRect);
 }
 
+void RenderManager::Render(const SDL_Rect* rect_in)
+{
+	SDL_SetRenderDrawColor(m_renderer, 0, 255, 0, 255);
+	SDL_RenderDrawRect(m_renderer, rect_in);
+}
+
 void RenderManager::Clear(int r, int g, int b, int a)
 {
 	SDL_SetRenderDrawColor(m_renderer, r, g, b, a);

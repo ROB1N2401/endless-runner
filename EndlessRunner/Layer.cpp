@@ -1,4 +1,5 @@
 #include "Layer.h"
+#include "RenderManager.h"
 
 Layer::Layer(const float scrollRatio_in) : m_scrollRatio(scrollRatio_in)
 {
@@ -34,4 +35,9 @@ void Layer::Render()
 {
 	for (int i = 0; i < m_duplicatesAmount; i++)
 		m_images[i].Render();
+}
+
+void Image::Render()
+{
+	RenderManager::Instance()->Render(sprite, transform);
 }

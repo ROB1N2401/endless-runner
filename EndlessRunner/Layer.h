@@ -1,6 +1,16 @@
 #pragma once
 
-#include "Entity.h"
+#include <string>
+#include "Sprite.h"
+#include "Transform.h"
+
+struct Image
+{
+	Sprite sprite;
+	Transform transform;
+
+    void Render();
+};
 
 class Layer
 {
@@ -15,5 +25,5 @@ private:
 	static const unsigned int m_duplicatesAmount = 3;
 	const float m_scrollRatio;
 	float m_trueWidth;
-	Entity m_images[m_duplicatesAmount];
+	Image m_images[m_duplicatesAmount];
 };

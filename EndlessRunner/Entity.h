@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
 #include "RenderManager.h"
-#include "Sprite.h"
+#include "Collider.h"
+#include "Animation.h"
 #include "Transform.h"
 
 //A base for the most of other structes 
@@ -16,6 +17,7 @@ public:
 	virtual void Render();
 	virtual void Update(float dt);
 
-	Sprite sprite;
+	Animation* animation;
+	Collider* collider;
 	Transform transform;
 };
