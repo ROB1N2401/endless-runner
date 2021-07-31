@@ -53,16 +53,12 @@ void TextureManager::Clear()
 
 SDL_Texture* TextureManager::GetTexture(const std::string& id_in)
 {
-	SDL_Texture* texture = nullptr;
-
-	if (TextureMap.count(id_in) > 0)
-		texture = TextureMap.find(id_in)->second;
-	else
+	if (!(TextureMap.count(id_in) > 0))
 	{
 		SDL_Log("Failed to find a texture with the next id: %s, %s", id_in.c_str(), SDL_GetError());
 		return nullptr;
 	}
-
-	return texture;
+	else
+		return TextureMap.find(id_in)->second;
 }
 
