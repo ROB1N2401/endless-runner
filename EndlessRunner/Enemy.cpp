@@ -41,7 +41,7 @@ Opossum::Opossum()
 
 	animation = new Animation(150, "opossum", "Resources/OpossumAnimation.txt");
 
-	transform.SetPosition(808.f, Player::defaultPos + 12);
+	transform.SetPosition(Randomize(), Player::defaultPos + 12);
 	transform.SetScale(3.0f, 3.0f);
 
 	int x = transform.GetPosition().x_;
@@ -61,7 +61,7 @@ Eagle::Eagle()
 
 	animation = new Animation(100, "eagle", "Resources/EagleAnimation.txt");
 
-	transform.SetPosition(808.f, Player::defaultPos - 200);
+	transform.SetPosition(Randomize(), Player::defaultPos - 250);
 	transform.SetScale(3.0f, 3.0f);
 
 	int x = transform.GetPosition().x_;

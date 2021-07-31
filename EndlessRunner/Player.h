@@ -24,7 +24,7 @@ private:
 };
 
 
-#pragma region StateMachine
+#pragma region FSM
 class PlayerState
 {
 public:

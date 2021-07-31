@@ -1,3 +1,4 @@
+#include "AudioManager.h"
 #include "RenderManager.h"
 #include "CollisionManager.h"
 #include "TextureManager.h"
@@ -16,6 +17,7 @@ Game::~Game()
 	delete opossum;
 	delete eagle;
 
+	AudioManager::Instance()->Clear();
 	TextureManager::Instance()->Clear();
 	SDL_DestroyRenderer(RenderManager::Instance()->GetRenderer());
 	SDL_DestroyWindow(screen.window);
@@ -47,6 +49,11 @@ void Game::Init()
 	screen.Init();
 	RenderManager::Instance()->Init(screen);
 
+	AudioManager::Instance()->LoadMusic("bg_music", "Assets/Audio/bgmusic.wav");
+	AudioManager::Instance()->LoadSound("jump_sound", "Assets/Audio/jump.wav");
+	AudioManager::Instance()->LoadSound("death_sound", "Assets/Audio/death.wav");
+	AudioManager::Instance()->LoadSound("pickup_sound", "Assets/Audio/pickup.wav");
+
 	TextureManager::Instance()->Load("player_run", "Assets/Spritesheets/player-run.png");
 	TextureManager::Instance()->Load("player_die", "Assets/Spritesheets/player-die.png");
 	TextureManager::Instance()->Load("player_jump", "Assets/Spritesheets/player-jump.png");
@@ -62,6 +69,8 @@ void Game::Init()
 	player = new Player();
 	opossum = new Opossum();
 	eagle = new Eagle();
+
+	AudioManager::Instance()->PlayMusic("bg_music");
 }
 
 void Game::Update(const float dt)

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "AudioManager.h"
 
 Player::Player()
 {
@@ -54,8 +55,6 @@ void Player::Update(const float dt)
 
 void Player::Die()
 {
-	isAlive = false;
-
 	delete m_state;
 	m_state = new DyingState();
 
@@ -64,6 +63,7 @@ void Player::Die()
 
 PlayerState::~PlayerState() {}
 
+#pragma region RunningState
 RunningState::RunningState() 
 {
 	stateAnimation = new Animation(100, "player_run", "Resources/RunningAnimation.txt");
@@ -90,8 +90,10 @@ PlayerState* RunningState::Update(Player& player_in, const float dt)
 	player_in.animation->Update();
 	return nullptr;
 }
+#pragma endregion
 
-JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -50.0f)
+#pragma region JumpingState
+JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -90.0f)
 {
 	isFallingDown = false;
 	stateAnimation = new Animation(1000, "player_jump", "Resources/JumpingAnimation.txt");
@@ -101,6 +103,7 @@ JumpingState::~JumpingState() {}
 
 void JumpingState::Enter(Player& player_in)
 {
+	AudioManager::Instance()->PlaySound("jump_sound");
 	player_in.animation = stateAnimation;
 }
 
@@ -125,7 +128,9 @@ PlayerState* JumpingState::Update(Player& player_in, const float dt)
 
 	return nullptr;
 }
+#pragma endregion
 
+#pragma region DyingState
 DyingState::DyingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -50.0f)
 {
 	stateAnimation = new Animation(400, "player_die", "Resources/DyingAnimation.txt");
@@ -135,6 +140,8 @@ DyingState::~DyingState() {}
 
 void DyingState::Enter(Player& player_in)
 {
+	AudioManager::Instance()->PlaySound("death_sound");
+	player_in.isAlive = false;
 	player_in.animation = stateAnimation;
 }
 
@@ -152,3 +159,4 @@ PlayerState* DyingState::Update(Player& player_in, const float dt)
 
 	return nullptr;
 }
+#pragma endregion
