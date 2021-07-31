@@ -4,5 +4,5 @@ struct Collider;
 
 struct CollisionManager
 {
-	static bool CheckCollision(Collider &lhs, Collider &rhs);
+	static bool CheckCollision(Collider *lhs, Collider *rhs);
 };

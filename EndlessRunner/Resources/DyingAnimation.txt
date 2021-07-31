@@ -1,0 +1,2 @@
+Resources/DyingSprite.txt
+0 1 

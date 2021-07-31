@@ -16,6 +16,8 @@ Player::Player()
 	int x_offset = 6 * transform.GetScale().x_;
 	int y_offset = 10 * transform.GetScale().y_;
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
+
+	isAlive = true;
 }
 
 Player::~Player()
@@ -37,12 +39,6 @@ void Player::OnKeyUp(KeyCode key)
 	}
 }
 
-void Player::Render()
-{
-	RenderManager::Instance()->Render(animation->frames[animation->currentFrame], transform);
-	RenderManager::Instance()->Render(&collider->rect);
-}
-
 void Player::Update(const float dt)
 {
 	collider->SetPosition(this->transform.GetPosition().x_, this->transform.GetPosition().y_);
@@ -54,6 +50,16 @@ void Player::Update(const float dt)
 
 		m_state->Enter(*this);
 	}
+}
+
+void Player::Die()
+{
+	isAlive = false;
+
+	delete m_state;
+	m_state = new DyingState();
+
+	m_state->Enter(*this);
 }
 
 PlayerState::~PlayerState() {}
@@ -69,7 +75,6 @@ void RunningState::Enter(Player& player_in)
 {
 	player_in.transform.SetPosition(0, Player::defaultPos);
 	player_in.animation = stateAnimation;
-
 }
 
 PlayerState* RunningState::OnKeyUp(Player& player_in, KeyCode key)
@@ -86,7 +91,7 @@ PlayerState* RunningState::Update(Player& player_in, const float dt)
 	return nullptr;
 }
 
-JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -75.0f)
+JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -50.0f)
 {
 	isFallingDown = false;
 	stateAnimation = new Animation(1000, "player_jump", "Resources/JumpingAnimation.txt");
@@ -117,6 +122,33 @@ PlayerState* JumpingState::Update(Player& player_in, const float dt)
 
 	if (player_in.transform.GetPosition().y_ > Player::defaultPos)
 		return new RunningState();
+
+	return nullptr;
+}
+
+DyingState::DyingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -50.0f)
+{
+	stateAnimation = new Animation(400, "player_die", "Resources/DyingAnimation.txt");
+}
+
+DyingState::~DyingState() {}
+
+void DyingState::Enter(Player& player_in)
+{
+	player_in.animation = stateAnimation;
+}
+
+PlayerState* DyingState::OnKeyUp(Player& player_in, KeyCode key) { return nullptr; }
+
+PlayerState* DyingState::Update(Player& player_in, const float dt)
+{
+	Helium::Vector2 dpos = m_velocity * dt;
+	player_in.transform.ChangePosition(dpos);
+
+	Helium::Vector2 dvelocity = m_gravity * dt;
+	m_velocity = m_velocity + dvelocity;
+
+	player_in.animation->Update();
 
 	return nullptr;
 }

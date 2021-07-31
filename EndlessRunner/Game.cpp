@@ -1,4 +1,5 @@
 #include "RenderManager.h"
+#include "CollisionManager.h"
 #include "TextureManager.h"
 #include "Game.h"
 
@@ -12,12 +13,21 @@ Game::~Game()
 
 	delete background;
 	delete player;
+	delete opossum;
+	delete eagle;
 
 	TextureManager::Instance()->Clear();
 	SDL_DestroyRenderer(RenderManager::Instance()->GetRenderer());
 	SDL_DestroyWindow(screen.window);
 	IMG_Quit();
 	SDL_Quit();
+}
+
+void Game::CheckCollisons()
+{
+	if (CollisionManager::CheckCollision(player->collider, opossum->collider) 
+		|| CollisionManager::CheckCollision(player->collider, eagle->collider))
+		player->Die();
 }
 
 void Game::OnKeyUp(KeyCode key)
@@ -38,20 +48,33 @@ void Game::Init()
 	RenderManager::Instance()->Init(screen);
 
 	TextureManager::Instance()->Load("player_run", "Assets/Spritesheets/player-run.png");
+	TextureManager::Instance()->Load("player_die", "Assets/Spritesheets/player-die.png");
 	TextureManager::Instance()->Load("player_jump", "Assets/Spritesheets/player-jump.png");
+	TextureManager::Instance()->Load("opossum", "Assets/Spritesheets/opossum.png");
+	TextureManager::Instance()->Load("eagle", "Assets/Spritesheets/eagle.png");
 	TextureManager::Instance()->Load("layer_1", "Assets/Parallax/hills-layer-01.png");
 	TextureManager::Instance()->Load("layer_2", "Assets/Parallax/hills-layer-02.png");
 	TextureManager::Instance()->Load("layer_3", "Assets/Parallax/hills-layer-03.png");
 	TextureManager::Instance()->Load("layer_4", "Assets/Parallax/hills-layer-04.png");
 	TextureManager::Instance()->Load("layer_5", "Assets/Parallax/hills-layer-05.png");
 
-	player = new Player();
 	background = new Parallax(35.0f);
+	player = new Player();
+	opossum = new Opossum();
+	eagle = new Eagle();
 }
 
 void Game::Update(const float dt)
 {
-	background->Update(dt);
+	if (player->isAlive)
+	{
+		CheckCollisons();
+
+		background->Update(dt);
+		opossum->Update(dt);
+		eagle->Update(dt);
+	}
+
 	player->Update(dt);
 }
 
@@ -61,6 +84,8 @@ void Game::Render()
 
 	background->Render();
 	player->Render();
+	opossum->Render();
+	eagle->Render();
 
 	RenderManager::Instance()->Present();
 }

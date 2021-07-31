@@ -2,8 +2,6 @@
 
 #include "Entity.h"
 #include "KeyCode.h"
-#include "Animation.h"
-#include "CollisionManager.h"
 
 class PlayerState;
 class RunningState;
@@ -15,9 +13,10 @@ public:
 	~Player();
 
 	void OnKeyUp(KeyCode key);
-	virtual void Render() final;
 	virtual void Update(const float dt) final;
+	void Die();
 
+	bool isAlive;
     static const int defaultPos = 395;
 
 private:
@@ -60,6 +59,20 @@ public:
 	PlayerState* Update(Player& player_in, const float dt);
 private:
 	bool isFallingDown;
+	Helium::Vector2 m_velocity;
+	const Helium::Vector2 m_gravity;
+};
+
+class DyingState : public PlayerState
+{
+public:
+	DyingState();
+	~DyingState();
+
+	void Enter(Player& player_in);
+	PlayerState* OnKeyUp(Player& player_in, KeyCode key);
+	PlayerState* Update(Player& player_in, const float dt);
+private:
 	Helium::Vector2 m_velocity;
 	const Helium::Vector2 m_gravity;
 };
