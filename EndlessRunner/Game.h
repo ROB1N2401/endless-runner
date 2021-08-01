@@ -1,6 +1,7 @@
 #pragma once
 #include "Screen.h"
 #include "Sprite.h"
+#include "Text.h"
 #include "Parallax.h"
 
 #include "Player.h"
@@ -14,16 +15,22 @@ class Game
 	bool quit;
 	Screen screen;
 	Opossum* opossum;
-	Eagle *eagle;
+	Eagle* eagle;
 	Player* player;
 	Parallax* background;
+	Text* score; 
 
-	void CheckCollisons();
+	//Game Loop
 	void OnKeyUp(KeyCode key);
 	void OnKeyDown(KeyCode key);
 	void Init();
 	void Render();
 	void Update(const float dt);
+
+	//Other
+	void CheckCollisons();
+	void UpdateScore();
+
 public:
 	Game();
 	~Game();

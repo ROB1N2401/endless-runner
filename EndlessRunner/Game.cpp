@@ -1,7 +1,8 @@
 #include "AudioManager.h"
+#include "TextureManager.h"
+#include "FontManager.h"
 #include "RenderManager.h"
 #include "CollisionManager.h"
-#include "TextureManager.h"
 #include "Game.h"
 
 Game::Game() : screen(this), quit(false)
@@ -30,6 +31,12 @@ void Game::CheckCollisons()
 	if (CollisionManager::CheckCollision(player->collider, opossum->collider) 
 		|| CollisionManager::CheckCollision(player->collider, eagle->collider))
 		player->Die();
+}
+
+void Game::UpdateScore()
+{
+	int currentScore = SDL_GetTicks() / 10;
+	score->text = "Score: " + std::to_string(currentScore);
 }
 
 void Game::OnKeyUp(KeyCode key)
@@ -65,10 +72,15 @@ void Game::Init()
 	TextureManager::Instance()->Load("layer_4", "Assets/Parallax/hills-layer-04.png");
 	TextureManager::Instance()->Load("layer_5", "Assets/Parallax/hills-layer-05.png");
 
+	FontManager::Instance()->Load("font_main", "Assets/Fonts/quite_magical.ttf", 64);
+
 	background = new Parallax(35.0f);
 	player = new Player();
 	opossum = new Opossum();
 	eagle = new Eagle();
+
+	score = new Text("font_main", SDL_Color{255, 255, 255, 255});
+	score->transform.SetPosition(10, 10);
 
 	AudioManager::Instance()->PlayMusic("bg_music");
 }
@@ -78,6 +90,7 @@ void Game::Update(const float dt)
 	if (player->isAlive)
 	{
 		CheckCollisons();
+		UpdateScore();
 
 		background->Update(dt);
 		opossum->Update(dt);
@@ -95,6 +108,8 @@ void Game::Render()
 	player->Render();
 	opossum->Render();
 	eagle->Render();
+
+	score->Render();
 
 	RenderManager::Instance()->Present();
 }
