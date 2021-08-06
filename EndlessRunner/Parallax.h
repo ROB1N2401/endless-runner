@@ -10,6 +10,7 @@ public:
 	~Parallax();
 
 	void Update(const float dt);
+	void Reset();
 	void Render();
 
 private:

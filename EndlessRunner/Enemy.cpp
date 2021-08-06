@@ -21,6 +21,8 @@ int Enemy::Randomize()
 	return num;
 }
 
+void Enemy::Reset() {}
+
 void Enemy::Update(const float dt)
 {
 	collider->SetPosition(this->transform.GetPosition().x_, this->transform.GetPosition().y_);
@@ -53,6 +55,8 @@ Opossum::Opossum()
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
 }
 
+void Opossum::Reset() { transform.SetPosition(Randomize(), Player::defaultPos + 12); }
+
 Eagle::Eagle()
 {
 	m_velocity = Helium::Vector2(-75.0f, 0.f);
@@ -72,3 +76,5 @@ Eagle::Eagle()
 	int y_offset = 10 * transform.GetScale().y_;
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
 }
+
+void Eagle::Reset() { transform.SetPosition(Randomize(), Player::defaultPos - 250); }

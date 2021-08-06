@@ -31,6 +31,13 @@ void Layer::Update(float baseSpeed_in)
 	}
 }
 
+void Layer::Reset()
+{
+	for (int i = 0; i < m_duplicatesAmount; i++)
+		m_images[i].transform.SetPosition(-m_trueWidth + (m_trueWidth * i), 0.f);
+	
+}
+
 void Layer::Render()
 {
 	for (int i = 0; i < m_duplicatesAmount; i++)

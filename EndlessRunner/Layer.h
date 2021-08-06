@@ -19,6 +19,7 @@ public:
 	Layer(const float scrollRatio_in, const std::string& texture_id_in, const std::string& spriteDataFileName_in);
 
 	void Update(float baseSpeed_in);
+	void Reset();
 	void Render();
 
 private:

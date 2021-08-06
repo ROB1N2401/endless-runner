@@ -13,8 +13,9 @@ public:
 	~Player();
 
 	void OnKeyUp(KeyCode key);
+	virtual void Reset() final;
 	virtual void Update(const float dt) final;
-	void Die();
+	void SetDeathState();
 
 	bool isAlive;
     static const int defaultPos = 395;
@@ -57,6 +58,7 @@ public:
 	void Enter(Player& player_in);
 	PlayerState* OnKeyUp(Player& player_in, KeyCode key);
 	PlayerState* Update(Player& player_in, const float dt);
+
 private:
 	bool isFallingDown;
 	Helium::Vector2 m_velocity;

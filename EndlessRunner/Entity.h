@@ -13,9 +13,9 @@ public:
 	Entity();
 	Entity(const std::string& id_in, const std::string& spritesheetName_in);
 
-	//virtual void Initialize();
 	virtual void Render();
-	virtual void Update(float dt);
+	virtual void Reset() = 0;
+	virtual void Update(float dt) = 0;
 
 	Animation* animation;
 	Collider* collider;

@@ -8,6 +8,7 @@ public:
 	Enemy();
 	~Enemy();
 
+	virtual void Reset();
 	virtual void Update(const float dt) final;
 
 protected:
@@ -21,10 +22,16 @@ class Opossum : public Enemy
 {
 public:
 	Opossum();
+
+	virtual void Reset() final;
+
 };
 
 class Eagle : public Enemy
 {
 public:
 	Eagle();
+
+	virtual void Reset() final;
+
 };

@@ -17,7 +17,7 @@ Text::Text(const std::string& id_in, SDL_Color color_in) : transform(), text("")
 
 void Text::Render() { RenderManager::Instance()->Render(this); }
 
-void Text::SetColor(SDL_Color& color_in) { m_color = color_in; }
+void Text::SetColor(SDL_Color color_in) { m_color = color_in; }
 
 SDL_Color Text::GetColor() { return m_color; }
 

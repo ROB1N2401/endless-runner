@@ -11,12 +11,18 @@ m_layer_5(1.0f, "layer_5", "Resources/ParallaxLayerData.txt")
 
 Parallax::~Parallax()
 {
+	for (int i = 0; i < m_layersAmount; i++)
+		m_layers[i]->Reset();
 }
 
 void Parallax::Update(const float dt)
 {
 	for (int i = 0; i < m_layersAmount; i++)
 		m_layers[i]->Update(m_baseSpeed * dt);
+}
+
+void Parallax::Reset()
+{
 }
 
 void Parallax::Render()

@@ -12,7 +12,7 @@ public:
 	Text(const std::string& id_in, SDL_Color color_in);
 
 	void Render();
-	void SetColor(SDL_Color& color_in);
+	void SetColor(SDL_Color color_in);
 	SDL_Color GetColor();
 	TTF_Font* GetFont();
 

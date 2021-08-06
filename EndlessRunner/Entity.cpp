@@ -12,8 +12,3 @@ void Entity::Render()
 	RenderManager::Instance()->Render(animation->frames[animation->currentFrame], transform);
 	//RenderManager::Instance()->Render(&collider->rect);
 }
-
-void Entity::Update(float dt)
-{
-
-}

@@ -40,6 +40,15 @@ void Player::OnKeyUp(KeyCode key)
 	}
 }
 
+void Player::Reset()
+{
+	delete m_state;
+	m_state = new RunningState();
+	m_state->Enter(*this);
+
+	transform.SetPosition(0, defaultPos);
+}
+
 void Player::Update(const float dt)
 {
 	collider->SetPosition(this->transform.GetPosition().x_, this->transform.GetPosition().y_);
@@ -53,7 +62,7 @@ void Player::Update(const float dt)
 	}
 }
 
-void Player::Die()
+void Player::SetDeathState()
 {
 	delete m_state;
 	m_state = new DyingState();

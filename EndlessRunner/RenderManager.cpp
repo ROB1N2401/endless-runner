@@ -27,7 +27,7 @@ void RenderManager::Render(const Sprite& sprite_in, const Transform& transform_i
 
 void RenderManager::Render(Text* text_in)
 {
-	SDL_Surface* textSurface = TTF_RenderText_Solid(text_in->GetFont(), text_in->text.c_str(), text_in->GetColor());
+	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(text_in->GetFont(), text_in->text.c_str(), text_in->GetColor(), 512);
 	if (textSurface == nullptr)
 	{
 		SDL_Log("Unable to render text surface: %s", TTF_GetError());
