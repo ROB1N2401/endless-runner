@@ -102,7 +102,7 @@ PlayerState* RunningState::Update(Player& player_in, const float dt)
 #pragma endregion
 
 #pragma region JumpingState
-JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -90.0f)
+JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -80.0f)
 {
 	isFallingDown = false;
 	stateAnimation = new Animation(1000, "player_jump", "Resources/JumpingAnimation.txt");

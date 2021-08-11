@@ -17,10 +17,25 @@ void RenderManager::Init(Screen& screen_in)
 void RenderManager::Render(const Sprite& sprite_in, const Transform& transform_in)
 {	
 	SDL_Rect srcRect = sprite_in.GetSource();
-	auto position = transform_in.GetPosition();
 	auto scale = transform_in.GetScale();
 	int w = static_cast<int>(sprite_in.GetSource().w * scale.x_);
 	int h = static_cast<int>(sprite_in.GetSource().h * scale.y_);
+
+	Helium::Vector2 position;
+	switch (transform_in.pivotPoint)
+	{
+	case PivotPoint::DEFAULT:
+		position = transform_in.GetPosition();
+		break;
+	case PivotPoint::CENTERED:
+		position.x_ = transform_in.GetPosition().x_ - w / 2;
+		position.y_ = transform_in.GetPosition().y_ - h / 2;
+		break;
+	default:
+		printf("RenderManager.cpp: pivot point to transform is not specified. \n");
+		break;
+	}
+
 	SDL_Rect dstRect = { static_cast<int>(position.x_), static_cast<int>(position.y_), w, h };
 	SDL_RenderCopy(m_renderer, sprite_in.GetTexture(), &srcRect, &dstRect);
 }
@@ -37,12 +52,15 @@ void RenderManager::Render(Text* text_in)
 	{
 		SDL_Texture* textTexture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
 		SDL_Rect srcRect = { 0, 0, textSurface->w, textSurface->h };
-		auto position = text_in->transform.GetPosition();
 		auto scale = text_in->transform.GetScale();
 		int w = textSurface->w * scale.x_;
 		int h = textSurface->h * scale.y_;
+		Helium::Vector2 position;
+		position.x_ = text_in->transform.GetPosition().x_ - w / 2;
+		position.y_ = text_in->transform.GetPosition().y_ - h / 2;
 		SDL_Rect dstRect = { position.x_, position.y_, w, h };
 		SDL_RenderCopy(m_renderer, textTexture, &srcRect, &dstRect);
+		SDL_FreeSurface(textSurface);
 		SDL_DestroyTexture(textTexture);
 	}
 }

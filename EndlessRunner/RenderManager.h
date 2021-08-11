@@ -9,8 +9,8 @@
 
 struct RenderManager
 {
-	public:
-		static RenderManager* Instance() { return m_Instance = (m_Instance != nullptr) ? m_Instance : new RenderManager(); };
+public:
+	static RenderManager* Instance() { return m_Instance = (m_Instance != nullptr) ? m_Instance : new RenderManager(); };
 
 	SDL_Renderer* GetRenderer();
 	void Init(Screen& screen_in);
@@ -20,7 +20,7 @@ struct RenderManager
 	void Clear(int r, int g, int b, int a);
 	void Present();
 
-	private:
-		SDL_Renderer* m_renderer;
-		static RenderManager* m_Instance;
+private:
+	SDL_Renderer* m_renderer;
+	static RenderManager* m_Instance;
 };

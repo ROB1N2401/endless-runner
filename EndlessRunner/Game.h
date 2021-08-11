@@ -101,7 +101,4 @@ private:
 	void Init();
 	void Render();
 	void Update(const float dt);
-
-	//Other
-	void UpdateEasing(float& t, const float d, const float c);
 };

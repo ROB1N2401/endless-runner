@@ -1,13 +1,24 @@
 #pragma once
 #include "HeliumMath.h"
 
+enum class PivotPoint
+{
+	DEFAULT, //Top left corner
+	CENTERED
+};
+
 struct Transform
 {
 public:
+	PivotPoint pivotPoint;
+
 	Transform();
+	Transform(PivotPoint pivot_in);
 	~Transform();
 
+	void SetPosition(Helium::Vector2& vector);
 	void SetPosition(const float x, const float y);
+	void SetScale(const float c);
 	void SetScale(const float x, const float y);
 
 	void ChangePosition(Helium::Vector2& vector);

@@ -2,16 +2,35 @@
 
 Transform::Transform()
 {
+	pivotPoint = PivotPoint::DEFAULT;
+	position = Helium::Vector2(0.0f, 0.0f);
+	scale = Helium::Vector2(1.0f, 1.0f);
+}
+
+Transform::Transform(PivotPoint pivot_in)
+{
+	pivotPoint = pivot_in;
 	position = Helium::Vector2(0.0f, 0.0f);
 	scale = Helium::Vector2(1.0f, 1.0f);
 }
 
 Transform::~Transform() {}
 
+void Transform::SetPosition(Helium::Vector2& vector)
+{
+	position = vector;
+}
+
 void Transform::SetPosition(const float x, const float y)
 {
 	position.x_ = x;
 	position.y_ = y;
+}
+
+void Transform::SetScale(const float c)
+{
+	scale.x_ = c;
+	scale.y_ = c;
 }
 
 void Transform::SetScale(const float x, const float y)

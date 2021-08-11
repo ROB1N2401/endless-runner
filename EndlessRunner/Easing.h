@@ -9,7 +9,9 @@ t stands for the current time, d for the easing duration, c for the desired end 
 class Easing
 {
 public:
-	static float EaseIn(float t, float d, float c);
-	static float EaseOut(float t, float d, float c);
-	static float EaseInOut(float t, float d, float c);
+	static float EaseInCubic(float t, float d, float c);
+	static float EaseOutCubic(float t, float d, float c);
+	static float EaseInOutCubic(float t, float d, float c);
+	static float EaseOutBounce(float t, float d, float c, float b);
+	static float EaseInOutBounce(float t, float d, float c, float b);
 };

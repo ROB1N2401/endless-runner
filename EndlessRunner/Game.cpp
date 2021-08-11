@@ -4,7 +4,6 @@
 #include "FontManager.h"
 #include "RenderManager.h"
 #include "CollisionManager.h"
-#include "Easing.h"
 #include "Game.h"
 
 #define D_TIME 0.16f
@@ -30,7 +29,7 @@ MenuState::~MenuState() {}
 void MenuState::Enter(Game& game_in)
 {
 	game_in.m_text->text = "Press SPACE to begin!";
-	game_in.m_text->transform.SetPosition(160.0f, 220.0f);
+	game_in.m_text->transform.SetPosition(384.0f, 256.0f);
 	game_in.m_text->SetColor(SDL_Color{ 0, 255, 255, 255 });
 
 	game_in.m_score = 0.0f;
@@ -58,8 +57,10 @@ GameState* MenuState::OnKeyUp(Game& game_in, KeyCode key)
 
 GameState* MenuState::Update(Game& game_in, const float dt)
 {
+	m_easingTime += dt;
+
 	game_in.m_background->Update(dt);
-	game_in.UpdateEasing(m_easingTime, 6.f, 1.f);
+	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f);
 	return nullptr;
 }
 #pragma endregion
@@ -72,7 +73,7 @@ PlayState::~PlayState() {}
 void PlayState::Enter(Game& game_in)
 {
 	game_in.m_text->text = "SCORE: ";
-	game_in.m_text->transform.SetPosition(10.0f, 10.0f);
+	game_in.m_text->transform.SetPosition(57.6f, 25.6f);
 	game_in.m_text->SetColor(SDL_Color{ 0, 255, 255, 255 });
 }
 
@@ -87,9 +88,11 @@ GameState* PlayState::OnKeyUp(Game& game_in, KeyCode key)
 
 GameState* PlayState::Update(Game& game_in, const float dt)
 {
+	m_easingTime += dt;
+
 	game_in.m_score += (D_TIME * 10.f);
 	game_in.m_text->text = "Score: " + std::to_string(static_cast<int>(game_in.m_score));
-	game_in.UpdateEasing(m_easingTime, 6.f, 0.5f);
+	game_in.m_text->Update(dt, m_easingTime, 1.5f, 0.5f);
 
 	game_in.m_background->Update(dt);
 	game_in.m_opossum->Update(dt);
@@ -112,7 +115,7 @@ PauseState::~PauseState() {}
 void PauseState::Enter(Game& game_in)
 {
 	game_in.m_text->text = "PAUSED";
-	game_in.m_text->transform.SetPosition(280.0f, 220.0f);
+	game_in.m_text->transform.SetPosition(384.0f, 256.0f);
 	game_in.m_text->SetColor(SDL_Color{ 0, 255, 255, 255 });
 }
 
@@ -124,7 +127,9 @@ GameState* PauseState::OnKeyUp(Game& game_in, KeyCode key)
 }
 GameState* PauseState::Update(Game& game_in, const float dt)
 {
-	game_in.UpdateEasing(m_easingTime, 6.f, 1.f);
+	m_easingTime += dt;
+
+	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f);
 	return nullptr;
 }
 #pragma endregion
@@ -141,7 +146,7 @@ void DeathState::Enter(Game& game_in)
 	std::ostringstream oss;
 	oss << "     Game Over! \n     Score: " << static_cast<int>(game_in.m_score) << "\nPress SPACE to restart!";
 	game_in.m_text->text = oss.str();
-	game_in.m_text->transform.SetPosition(200.0f, 200.0f);
+	game_in.m_text->transform.SetPosition(384.0f, 256.0f);
 	game_in.m_text->SetColor(SDL_Color{ 255, 55, 0, 255 });
 }
 
@@ -154,7 +159,9 @@ GameState* DeathState::OnKeyUp(Game& game_in, KeyCode key)
 
 GameState* DeathState::Update(Game& game_in, const float dt)
 {
-	game_in.UpdateEasing(m_easingTime, 6.f, 0.75f);
+	m_easingTime += dt;
+
+	game_in.m_text->Update(dt, m_easingTime, 1.5f, 0.75f);
 	game_in.m_player->Update(dt);
 	return nullptr;
 }
@@ -185,13 +192,21 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void Game::UpdateEasing(float& t, const float d, const float c)
-{
-	t += D_TIME;
-	if (t > d)
-		t = d;
-	m_text->transform.SetScale(Easing::EaseOut(t, d, c), Easing::EaseOut(t, d, c));
-}
+//void Game::UpdateTextEasing(float& t, const float d, const float c)
+//{
+//	t += D_TIME;
+//	if (t > d)
+//		t = d;
+//	m_text->transform.SetScale(Easing::EaseOutCubic(t, d, c), Easing::EaseOutCubic(t, d, c));
+//}
+//
+//void Game::UpdateScreenShaking(float& t, const float d, const float c, const float b)
+//{
+//	t += D_TIME;
+//	if (t > d)
+//		t = d;
+//	m_text->transform.SetScale(Easing::EaseOutCubic(t, d, c), Easing::EaseOutCubic(t, d, c));
+//}
 
 void Game::OnKeyUp(KeyCode key)
 {

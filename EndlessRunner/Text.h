@@ -11,6 +11,7 @@ public:
 	Text(const std::string& id_in);
 	Text(const std::string& id_in, SDL_Color color_in);
 
+	void Update(const float dt, float& t, const float d, const float c);
 	void Render();
 	void SetColor(SDL_Color color_in);
 	SDL_Color GetColor();
