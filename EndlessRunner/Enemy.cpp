@@ -28,7 +28,7 @@ void Enemy::Update(const float dt)
 	collider->SetPosition(this->transform.GetPosition().x_, this->transform.GetPosition().y_);
 	animation->Update();
 
-	Helium::Vector2 dpos = m_velocity * dt;
+	Helium::Vector2 dpos = m_velocity * dt * 10.0f;
 	transform.ChangePosition(dpos);
 
 	if (transform.GetPosition().x_ < -100.f)
@@ -44,7 +44,7 @@ Opossum::Opossum()
 	animation = new Animation(150, "opossum", "Resources/OpossumAnimation.txt");
 
 	transform.SetPosition(Randomize(), Player::defaultPos + 12);
-	transform.SetScale(3.0f, 3.0f);
+	transform.SetScale(3.f);
 
 	int x = transform.GetPosition().x_;
 	int y = transform.GetPosition().y_;
@@ -55,7 +55,12 @@ Opossum::Opossum()
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
 }
 
-void Opossum::Reset() { transform.SetPosition(Randomize(), Player::defaultPos + 12); }
+void Opossum::Reset() 
+{ 
+	transform.SetPosition(Randomize(), Player::defaultPos + 12);
+	transform.SetScale(3.f);
+	transform.SetRotation(0.f);
+}
 
 Eagle::Eagle()
 {
@@ -77,4 +82,9 @@ Eagle::Eagle()
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
 }
 
-void Eagle::Reset() { transform.SetPosition(Randomize(), Player::defaultPos - 250); }
+void Eagle::Reset() 
+{ 
+	transform.SetPosition(Randomize(), Player::defaultPos - 250); 
+	transform.SetScale(3.f);
+	transform.SetRotation(0.f);
+}

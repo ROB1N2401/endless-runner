@@ -18,7 +18,7 @@ public:
 	void SetDeathState();
 
 	bool isAlive;
-    static const int defaultPos = 395;
+    static const int defaultPos = 405;
 
 private:
 	PlayerState* m_state;

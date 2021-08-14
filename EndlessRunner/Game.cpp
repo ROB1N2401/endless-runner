@@ -6,8 +6,7 @@
 #include "CollisionManager.h"
 #include "Game.h"
 
-#define D_TIME 0.16f
-#define EASING_DURATION 1.45f
+#define D_TIME 0.016f
 
 #pragma region FSM
 GameState::~GameState() {}
@@ -39,6 +38,7 @@ void MenuState::Enter(Game& game_in)
 	game_in.m_opossum->Reset();
 	game_in.m_eagle->Reset();
 
+	Camera::Instance()->Reset();
 	AudioManager::Instance()->PlayMusic("bg_music");
 }
 
@@ -90,9 +90,9 @@ GameState* PlayState::Update(Game& game_in, const float dt)
 {
 	m_easingTime += dt;
 
-	game_in.m_score += (D_TIME * 10.f);
+	game_in.m_score += (D_TIME * 100.f);
 	game_in.m_text->text = "Score: " + std::to_string(static_cast<int>(game_in.m_score));
-	game_in.m_text->Update(dt, m_easingTime, 1.5f, 0.5f);
+	game_in.m_text->Update(dt, m_easingTime, 0.25f, 0.5f);
 
 	game_in.m_background->Update(dt);
 	game_in.m_opossum->Update(dt);
@@ -161,6 +161,7 @@ GameState* DeathState::Update(Game& game_in, const float dt)
 {
 	m_easingTime += dt;
 
+	Camera::Instance()->Update(dt);
 	game_in.m_text->Update(dt, m_easingTime, 1.5f, 0.75f);
 	game_in.m_player->Update(dt);
 	return nullptr;
@@ -191,22 +192,6 @@ Game::~Game()
 	IMG_Quit();
 	SDL_Quit();
 }
-
-//void Game::UpdateTextEasing(float& t, const float d, const float c)
-//{
-//	t += D_TIME;
-//	if (t > d)
-//		t = d;
-//	m_text->transform.SetScale(Easing::EaseOutCubic(t, d, c), Easing::EaseOutCubic(t, d, c));
-//}
-//
-//void Game::UpdateScreenShaking(float& t, const float d, const float c, const float b)
-//{
-//	t += D_TIME;
-//	if (t > d)
-//		t = d;
-//	m_text->transform.SetScale(Easing::EaseOutCubic(t, d, c), Easing::EaseOutCubic(t, d, c));
-//}
 
 void Game::OnKeyUp(KeyCode key)
 {
@@ -250,7 +235,7 @@ void Game::Init()
 
 	FontManager::Instance()->Load("font_main", "Assets/Fonts/quite_magical.ttf", 64);
 
-	m_background = new Parallax(35.0f);
+	m_background = new Parallax(350.0f);
 	m_player = new Player();
 	m_opossum = new Opossum();
 	m_eagle = new Eagle();

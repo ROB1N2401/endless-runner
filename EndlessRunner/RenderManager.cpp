@@ -1,6 +1,58 @@
 #include "RenderManager.h"
 #include "TextureManager.h"
 #include "FontManager.h"
+#include "Easing.h"
+
+Camera* Camera::s_Instance = nullptr;
+
+Camera::Camera() : m_shakeDuration(2.0f), m_shakeStrength(5.0f)
+{
+	Reset();
+}
+
+void Camera::Update(const float dt)
+{
+	if (m_shakeTime < m_shakeDuration)
+	{
+		m_easingTime += dt * m_easingDirection * m_shakeStrength;
+
+		auto t = Easing::EaseInOutBounce(m_easingTime, 2.75f, 7.5625f, 0.0f);
+
+		m_transform.ChangePosition(t * m_shakeStrength * m_shakeDirection, t * m_shakeStrength * m_shakeDirection);
+		m_transform.SetScale(1.0f + (t / 5.0f * m_shakeStrength));
+		m_transform.SetRotation(t * (5.f * m_shakeStrength * -m_shakeDirection));
+
+		if (m_easingTime > 1.0f || m_easingTime < 0.0f)
+			m_easingDirection = -m_easingDirection;
+
+		if (m_easingTime <= 0.0f)
+			m_shakeDirection = -m_shakeDirection;
+	}
+	else
+	{
+		m_transform.SetPosition(0.0f, 0.0f);
+		m_transform.SetScale(1.0f);
+		m_transform.SetRotation(0.0f);
+	}
+	m_shakeTime += dt;
+}
+
+void Camera::Reset()
+{
+	m_transform.SetPosition(0.0f, 0.0f);
+	m_transform.SetScale(1.0f);
+	m_transform.SetRotation(0.0f);
+
+	m_shakeTime = 0.0f;
+	m_easingTime = 0.0f;
+	m_shakeDirection = 1;
+	m_easingDirection = 1;
+}
+
+void Camera::SetShakeStrength(float shakeValue_in)
+{
+}
+
 
 RenderManager* RenderManager::m_Instance = nullptr;
 
@@ -17,27 +69,24 @@ void RenderManager::Init(Screen& screen_in)
 void RenderManager::Render(const Sprite& sprite_in, const Transform& transform_in)
 {	
 	SDL_Rect srcRect = sprite_in.GetSource();
+
 	auto scale = transform_in.GetScale();
-	int w = static_cast<int>(sprite_in.GetSource().w * scale.x_);
-	int h = static_cast<int>(sprite_in.GetSource().h * scale.y_);
+	int w = static_cast<int>(sprite_in.GetSource().w * scale.x_ * Camera::Instance()->m_transform.GetScale().x_);
+	int h = static_cast<int>(sprite_in.GetSource().h * scale.y_ * Camera::Instance()->m_transform.GetScale().y_);
 
 	Helium::Vector2 position;
-	switch (transform_in.pivotPoint)
+	position.x_ = transform_in.GetPosition().x_ - Camera::Instance()->m_transform.GetPosition().x_;
+	position.y_ = transform_in.GetPosition().y_ - Camera::Instance()->m_transform.GetPosition().y_;
+	if (transform_in.pivotPoint == PivotPoint::CENTERED)
 	{
-	case PivotPoint::DEFAULT:
-		position = transform_in.GetPosition();
-		break;
-	case PivotPoint::CENTERED:
-		position.x_ = transform_in.GetPosition().x_ - w / 2;
-		position.y_ = transform_in.GetPosition().y_ - h / 2;
-		break;
-	default:
-		printf("RenderManager.cpp: pivot point to transform is not specified. \n");
-		break;
+		position.x_ -= w / 2;
+		position.y_ -= h / 2;
 	}
 
 	SDL_Rect dstRect = { static_cast<int>(position.x_), static_cast<int>(position.y_), w, h };
-	SDL_RenderCopy(m_renderer, sprite_in.GetTexture(), &srcRect, &dstRect);
+
+	float angle = Camera::Instance()->m_transform.GetRotation();
+	SDL_RenderCopyEx(m_renderer, sprite_in.GetTexture(), &srcRect, &dstRect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void RenderManager::Render(Text* text_in)
@@ -82,3 +131,4 @@ void RenderManager::Present()
 {
 	SDL_RenderPresent(m_renderer);
 }
+

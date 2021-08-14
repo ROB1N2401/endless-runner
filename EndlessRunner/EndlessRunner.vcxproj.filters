@@ -9,18 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\Entities">
-      <UniqueIdentifier>{4e76118f-8619-41a5-b039-344673285351}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Parallax">
-      <UniqueIdentifier>{4c8f8253-2f9f-4e67-a48c-dcdfa08e014a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Entities">
-      <UniqueIdentifier>{856f4eeb-c42e-4468-955e-93aa4f80aa3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Parallax">
-      <UniqueIdentifier>{e8dc2713-2209-4c09-b9a4-dfbd23813701}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Systems">
       <UniqueIdentifier>{f77147c7-1ee7-443d-b498-975d242aeff9}</UniqueIdentifier>
     </Filter>
@@ -33,20 +21,32 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{13314325-a4a2-481a-8432-8ba2dbd4d1ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{4e76118f-8619-41a5-b039-344673285351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{856f4eeb-c42e-4468-955e-93aa4f80aa3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Parallax">
+      <UniqueIdentifier>{e8dc2713-2209-4c09-b9a4-dfbd23813701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Parallax">
+      <UniqueIdentifier>{4c8f8253-2f9f-4e67-a48c-dcdfa08e014a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Entities">
+      <UniqueIdentifier>{2905f138-65d1-4af0-8be4-46abf062ed96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Entities">
+      <UniqueIdentifier>{f0dbd2d6-3240-42d7-9130-40f2d55c57a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Layer.cpp">
-      <Filter>Source Files\Parallax</Filter>
+      <Filter>Source Files\Objects\Parallax</Filter>
     </ClCompile>
     <ClCompile Include="Parallax.cpp">
-      <Filter>Source Files\Parallax</Filter>
+      <Filter>Source Files\Objects\Parallax</Filter>
     </ClCompile>
     <ClCompile Include="HeliumMath.cc">
       <Filter>Source Files\Systems</Filter>
@@ -84,17 +84,11 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="AudioManager.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
     <ClCompile Include="FontManager.cpp">
       <Filter>Source Files\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
@@ -102,19 +96,25 @@
     <ClCompile Include="Easing.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Objects\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Objects\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Objects\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Layer.h">
-      <Filter>Header Files\Parallax</Filter>
+      <Filter>Header Files\Objects\Parallax</Filter>
     </ClInclude>
     <ClInclude Include="Parallax.h">
-      <Filter>Header Files\Parallax</Filter>
+      <Filter>Header Files\Objects\Parallax</Filter>
     </ClInclude>
     <ClInclude Include="HeliumMath.h">
       <Filter>Header Files\Systems</Filter>
@@ -149,9 +149,6 @@
     <ClInclude Include="Collider.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="AudioManager.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
@@ -161,14 +158,23 @@
     <ClInclude Include="Transform.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Easing.h">
       <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Objects\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Objects\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Objects\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

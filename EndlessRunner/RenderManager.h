@@ -7,7 +7,32 @@
 #include "Transform.h"
 #include "SDL_image.h"
 
-struct RenderManager
+class Camera
+{
+public:
+	static Camera* Instance() { return s_Instance = (s_Instance != nullptr) ? s_Instance : new Camera(); };
+
+	void Update(const float dt);
+	void Reset();
+	void SetShakeStrength(float shakeValue_in);
+
+private:
+	Camera();
+
+	friend class RenderManager;
+
+	const float m_shakeDuration;
+	float m_shakeStrength;
+	float m_easingTime;
+	float m_shakeTime;
+	int m_shakeDirection;
+	int m_easingDirection;
+	Transform m_transform;
+	static Camera* s_Instance;
+
+};
+
+class RenderManager
 {
 public:
 	static RenderManager* Instance() { return m_Instance = (m_Instance != nullptr) ? m_Instance : new RenderManager(); };

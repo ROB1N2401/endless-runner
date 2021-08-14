@@ -8,7 +8,7 @@ Player::Player()
 	animation = m_state->stateAnimation;
 
 	transform.SetPosition(0, defaultPos);
-	transform.SetScale(3, 3);
+	transform.SetScale(3.f, 3.f);
 	
 	int x = transform.GetPosition().x_;
 	int y = transform.GetPosition().y_;
@@ -47,6 +47,8 @@ void Player::Reset()
 	m_state->Enter(*this);
 
 	transform.SetPosition(0, defaultPos);
+	transform.SetScale(3.f);
+	transform.SetRotation(0.f);
 }
 
 void Player::Update(const float dt)
@@ -120,10 +122,10 @@ PlayerState* JumpingState::OnKeyUp(Player& player_in, KeyCode key) { return null
 
 PlayerState* JumpingState::Update(Player& player_in, const float dt)
 {
-	Helium::Vector2 dpos = m_velocity * dt;
+	Helium::Vector2 dpos = m_velocity * dt * 10.f;
 	player_in.transform.ChangePosition(dpos);
 	
-	Helium::Vector2 dvelocity = m_gravity * dt;
+	Helium::Vector2 dvelocity = m_gravity * dt * 10.f;
 	m_velocity = m_velocity + dvelocity;
 
 	if (!isFallingDown && m_velocity.y_ > 0)
@@ -158,10 +160,10 @@ PlayerState* DyingState::OnKeyUp(Player& player_in, KeyCode key) { return nullpt
 
 PlayerState* DyingState::Update(Player& player_in, const float dt)
 {
-	Helium::Vector2 dpos = m_velocity * dt;
+	Helium::Vector2 dpos = m_velocity * dt * 10.0f;
 	player_in.transform.ChangePosition(dpos);
 
-	Helium::Vector2 dvelocity = m_gravity * dt;
+	Helium::Vector2 dvelocity = m_gravity * dt * 10.0f;
 	m_velocity = m_velocity + dvelocity;
 
 	player_in.animation->Update();

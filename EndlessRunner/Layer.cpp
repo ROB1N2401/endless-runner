@@ -9,7 +9,7 @@ Layer::Layer(const float scrollRatio_in) : m_scrollRatio(scrollRatio_in), m_base
 }
 
 Layer::Layer(const float scrollRatio_in, const std::string& texture_id_in, const std::string& spriteDataFileName_in)
-	: m_scrollRatio(scrollRatio_in), m_baseScale(2.0f)
+	: m_scrollRatio(scrollRatio_in), m_baseScale(2.2f)
 {
 	for (int i = 0; i < m_duplicatesAmount; i++)
 	{
@@ -38,7 +38,11 @@ void Layer::Update(float baseSpeed_in)
 void Layer::Reset()
 {
 	for (int i = 0; i < m_duplicatesAmount; i++)
+	{
 		m_images[i].transform.SetPosition(-m_trueWidth / 2 + (m_trueWidth * i), 256.f);
+		m_images[i].transform.SetScale(m_baseScale);
+		m_images[i].transform.SetRotation(0.0f);
+	}
 	
 }
 

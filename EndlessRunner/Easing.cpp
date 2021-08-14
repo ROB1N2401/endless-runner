@@ -46,13 +46,6 @@ float Easing::EaseInOutBounce(float t, float d, float c, float b)
 
 	if (t < 0.5) 
 		return (1 - EaseOutBounce(1 - 2 * t, d, c, b)) / 2;
-	
-	else if (0.5 < t < 1) 
-		return (1 + EaseOutBounce(2 * t - 1, d, c, b)) / 2;
-	
-	else if (1 < t < 1.5) 
-		return (1 + EaseOutBounce(1 - 2 * (t - 1), d, c, b)) / 2;
-	
 	else 
-		return (1 - EaseOutBounce(- 1 + 2 * (t - 1), d, c, b)) / 2;
+		return (1 + EaseOutBounce(2 * t - 1, d, c, b)) / 2;
 }
