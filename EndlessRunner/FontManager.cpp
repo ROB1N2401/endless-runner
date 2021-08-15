@@ -1,6 +1,6 @@
 #include "FontManager.h"
 
-FontManager* FontManager::m_Instance = nullptr;
+FontManager* FontManager::s_Instance = nullptr;
 
 bool FontManager::Load(const std::string& id_in, const std::string& fontFileName_in, const unsigned int size_in)
 {

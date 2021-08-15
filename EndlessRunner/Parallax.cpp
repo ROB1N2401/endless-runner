@@ -6,7 +6,6 @@ m_layer_3(0.5f, "layer_3", "Resources/ParallaxLayerData.txt"),
 m_layer_4(0.75f, "layer_4", "Resources/ParallaxLayerData.txt"),
 m_layer_5(1.0f, "layer_5", "Resources/ParallaxLayerData.txt")
 {
-
 }
 
 Parallax::~Parallax() {}

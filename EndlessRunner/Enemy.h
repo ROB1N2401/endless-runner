@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Entity.h"
 
 class Enemy : public Entity
@@ -8,14 +7,14 @@ public:
 	Enemy();
 	~Enemy();
 
-	virtual void Reset();
-	virtual void Update(const float dt) final;
+	virtual void Reset() = 0;
+	void Update(const float dt);
 
 protected:
-	int Randomize();
-
 	int m_minRange, m_maxRange;
 	Helium::Vector2 m_velocity;
+
+	const float Randomize();
 };
 
 class Opossum : public Enemy
@@ -23,8 +22,7 @@ class Opossum : public Enemy
 public:
 	Opossum();
 
-	virtual void Reset() final;
-
+	virtual void Reset() override;
 };
 
 class Eagle : public Enemy
@@ -32,6 +30,5 @@ class Eagle : public Enemy
 public:
 	Eagle();
 
-	virtual void Reset() final;
-
+	virtual void Reset() override;
 };

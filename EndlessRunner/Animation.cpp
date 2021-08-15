@@ -6,16 +6,16 @@
 
 Animation::Animation(const Uint32 animationSpeed_in) : m_animationSpeed(animationSpeed_in)
 {
-	lastTimeUpdated = 0;
+	m_lastTimeUpdated = 0;
+	m_framesAmount = 0;
 	currentFrame = 0;
-	framesAmount = 0;
 }
 
 Animation::Animation(const Uint32 animationSpeed_in, const std::string& texture_id_in, const std::string& animationName_in) : 
 	m_animationSpeed(animationSpeed_in)
 {
 	currentFrame = 0;
-	lastTimeUpdated = 0;
+	m_lastTimeUpdated = 0;
 
 	std::ifstream stream_;
 	stream_.open(animationName_in);
@@ -32,17 +32,15 @@ Animation::Animation(const Uint32 animationSpeed_in, const std::string& texture_
 
 	while (ss >> frame_) frames_.push_back(stoi(frame_));
 	for (int i : frames_)
-	{
 		frames.push_back(spritesheet.sprites[i]);
-	}
-	framesAmount = frames.size();
+	m_framesAmount = static_cast<int>(frames.size());
 }
 
 void Animation::SwitchFrames()
 {
 	currentFrame += 1;
 
-	if (currentFrame == framesAmount)
+	if (currentFrame == m_framesAmount)
 		currentFrame = 0;
 }
 
@@ -51,30 +49,9 @@ void Animation::Update()
 	Uint32 ticks = SDL_GetTicks();
 	Uint32 currentTime = ticks / m_animationSpeed;
 
-	if (currentTime > lastTimeUpdated)
+	if (currentTime > m_lastTimeUpdated)
 	{
 		SwitchFrames();
-
-		lastTimeUpdated = currentTime;
+		m_lastTimeUpdated = currentTime;
 	}
 }
-
-/*
-switch (m_animationType)
-	{
-		case Type::Single:
-			if (isFirstPlayback && currentFrame == framesAmount - 1)
-				isFirstPlayback = false;
-			break;
-
-		case Type::Loop:
-			if (currentFrame == framesAmount - 1)
-				currentFrame = 0;
-			break;
-
-		case Type::Pingpong:
-			if (currentFrame == 0 || currentFrame == framesAmount - 1)
-				direction = -direction;
-			break;
-	}
-*/

@@ -10,22 +10,18 @@ Enemy::~Enemy()
 	delete collider;
 }
 
-int Enemy::Randomize()
+const float Enemy::Randomize()
 {
+	srand(static_cast<unsigned int>(time(NULL)));
 	const int addition = m_maxRange - m_minRange;
-	
-	srand(time(NULL));
-
 	int num = m_minRange + rand() % addition;
 
-	return num;
+	return static_cast<const float>(num);
 }
-
-void Enemy::Reset() {}
 
 void Enemy::Update(const float dt)
 {
-	collider->SetPosition(this->transform.GetPosition().x_, this->transform.GetPosition().y_);
+	collider->SetPosition(static_cast<int>(this->transform.GetPosition().x_), static_cast<int>(this->transform.GetPosition().y_));
 	animation->Update();
 
 	Helium::Vector2 dpos = m_velocity * dt * 10.0f;
@@ -38,53 +34,49 @@ void Enemy::Update(const float dt)
 Opossum::Opossum()
 {
 	m_velocity = Helium::Vector2(-50.0f, 0.f);
-	m_minRange = 800.f;
-	m_maxRange = 3200.f;
+	m_minRange = 800;
+	m_maxRange = 3200;
 
 	animation = new Animation(150, "opossum", "Resources/OpossumAnimation.txt");
 
 	transform.SetPosition(Randomize(), Player::defaultPos + 12);
 	transform.SetScale(3.f);
 
-	int x = transform.GetPosition().x_;
-	int y = transform.GetPosition().y_;
-	int w = 28 * transform.GetScale().x_;
-	int h = 18 * transform.GetScale().y_;
-	int x_offset = -1 * transform.GetScale().x_;
-	int y_offset = 8 * transform.GetScale().y_;
+	int x = static_cast<int>(transform.GetPosition().x_);
+	int y = static_cast<int>(transform.GetPosition().y_);
+	int w = static_cast<int>(28.f * transform.GetScale().x_);
+	int h = static_cast<int>(18.f * transform.GetScale().y_);
+	int x_offset = static_cast<int>(-1.f * transform.GetScale().x_);
+	int y_offset = static_cast<int>(8.f * transform.GetScale().y_);
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
 }
 
 void Opossum::Reset() 
 { 
-	transform.SetPosition(Randomize(), Player::defaultPos + 12);
-	transform.SetScale(3.f);
-	transform.SetRotation(0.f);
+	transform.SetPosition(static_cast<const float>(Randomize()), Player::defaultPos + 12);
 }
 
 Eagle::Eagle()
 {
 	m_velocity = Helium::Vector2(-75.0f, 0.f);
-	m_minRange = 1500.f;
-	m_maxRange = 6000.f;
+	m_minRange = 1500;
+	m_maxRange = 6000;
 
 	animation = new Animation(100, "eagle", "Resources/EagleAnimation.txt");
 
 	transform.SetPosition(Randomize(), Player::defaultPos - 250);
 	transform.SetScale(3.0f, 3.0f);
 
-	int x = transform.GetPosition().x_;
-	int y = transform.GetPosition().y_;
-	int w = 33 * transform.GetScale().x_;
-	int h = 28 * transform.GetScale().y_;
-	int x_offset = -1 * transform.GetScale().x_;
-	int y_offset = 10 * transform.GetScale().y_;
+	int x = static_cast<int>(transform.GetPosition().x_);
+	int y = static_cast<int>(transform.GetPosition().y_);
+	int w = static_cast<int>(33.f * transform.GetScale().x_);
+	int h = static_cast<int>(28.f * transform.GetScale().y_);
+	int x_offset = static_cast<int>(-1.f * transform.GetScale().x_);
+	int y_offset = static_cast<int>(10.f * transform.GetScale().y_);
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
 }
 
 void Eagle::Reset() 
 { 
 	transform.SetPosition(Randomize(), Player::defaultPos - 250); 
-	transform.SetScale(3.f);
-	transform.SetRotation(0.f);
 }

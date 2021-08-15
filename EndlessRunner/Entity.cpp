@@ -3,9 +3,7 @@
 Entity::Entity() : animation(), collider() {}
 
 Entity::Entity(const std::string& id_in, const std::string& spritesheetName_in)
-	: animation(new Animation(100, id_in, spritesheetName_in)), collider(new Collider(0, 0, 0, 0))
-{
-}
+	: animation(new Animation(100, id_in, spritesheetName_in)), collider(new Collider()) {}
 
 void Entity::Render()
 {

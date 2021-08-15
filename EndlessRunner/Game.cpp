@@ -10,6 +10,8 @@
 #define D_TIME 0.016f
 
 #pragma region FSM
+GameState::GameState() { m_easingTime = 0.f; }
+
 GameState::~GameState() {}
 
 void GameState::Render(Game& game_in)
@@ -22,17 +24,13 @@ void GameState::Render(Game& game_in)
 }
 
 #pragma region MenuState
-MenuState::MenuState() { m_easingTime = 0.f; }
-
-MenuState::~MenuState() {}
-
 void MenuState::Enter(Game& game_in)
 {
 	game_in.m_text->text = "Press SPACE to begin!";
-	game_in.m_text->transform.SetPosition(384.0f, 256.0f);
+	game_in.m_text->transform.SetPosition(384.f, 256.f);
 	game_in.m_text->SetColor(SDL_Color{ 0, 255, 255, 255 });
 
-	game_in.m_score = 0.0f;
+	game_in.m_score = 0.f;
 
 	game_in.m_background->Reset();
 	game_in.m_player->Reset();
@@ -53,6 +51,7 @@ GameState* MenuState::OnKeyUp(Game& game_in, KeyCode key)
 {
 	if (key == KeyCode::SPACE)
 		return new PlayState();
+
 	return nullptr;
 }
 
@@ -62,15 +61,12 @@ GameState* MenuState::Update(Game& game_in, const float dt)
 
 	game_in.m_background->Update(dt);
 	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f * game_in.m_uiScaleModifier);
+
 	return nullptr;
 }
 #pragma endregion
 
 #pragma region PlayState
-PlayState::PlayState() { m_easingTime = 0.f; }
-
-PlayState::~PlayState() {}
-
 void PlayState::Enter(Game& game_in)
 {
 	game_in.m_text->text = "SCORE: ";
@@ -81,9 +77,9 @@ void PlayState::Enter(Game& game_in)
 GameState* PlayState::OnKeyUp(Game& game_in, KeyCode key)
 {
 	game_in.m_player->OnKeyUp(key);
-
 	if (key == KeyCode::P)
 		return new PauseState();
+
 	return nullptr;
 }
 
@@ -109,14 +105,10 @@ GameState* PlayState::Update(Game& game_in, const float dt)
 #pragma endregion
 
 #pragma region PauseState
-PauseState::PauseState() { m_easingTime = 0.0f; }
-
-PauseState::~PauseState() {}
-
 void PauseState::Enter(Game& game_in)
 {
 	game_in.m_text->text = "PAUSED";
-	game_in.m_text->transform.SetPosition(384.0f, 256.0f);
+	game_in.m_text->transform.SetPosition(384.f, 256.f);
 	game_in.m_text->SetColor(SDL_Color{ 0, 255, 255, 255 });
 }
 
@@ -124,6 +116,7 @@ GameState* PauseState::OnKeyUp(Game& game_in, KeyCode key)
 {
 	if (key == KeyCode::P)
 		return new PlayState();
+
 	return nullptr;
 }
 GameState* PauseState::Update(Game& game_in, const float dt)
@@ -131,15 +124,12 @@ GameState* PauseState::Update(Game& game_in, const float dt)
 	m_easingTime += dt;
 
 	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f * game_in.m_uiScaleModifier);
+
 	return nullptr;
 }
 #pragma endregion
 
 #pragma region DeathState
-DeathState::DeathState() { m_easingTime = 0.f; }
-
-DeathState::~DeathState() {}
-
 void DeathState::Enter(Game& game_in) 
 {
 	game_in.m_player->SetDeathState();
@@ -155,6 +145,7 @@ GameState* DeathState::OnKeyUp(Game& game_in, KeyCode key)
 {
 	if (key == KeyCode::SPACE)
 		return new MenuState();
+
 	return nullptr;
 }
 
@@ -165,15 +156,21 @@ GameState* DeathState::Update(Game& game_in, const float dt)
 	Camera::Instance()->Update(dt);
 	game_in.m_text->Update(dt, m_easingTime, 1.5f, 0.7f * game_in.m_uiScaleModifier);
 	game_in.m_player->Update(dt);
+
 	return nullptr;
 }
 #pragma endregion
-
 #pragma endregion
 
 
 Game::Game() : m_screen(this), m_quit(false), m_score(0.0f), m_uiScaleModifier(1.0f)
 {
+	m_state = nullptr;
+	m_background = nullptr;
+	m_player = nullptr;
+	m_opossum = nullptr;
+	m_eagle = nullptr;
+	m_text = nullptr;
 }
 
 Game::~Game()
@@ -185,6 +182,7 @@ Game::~Game()
 	delete m_player;
 	delete m_opossum;
 	delete m_eagle;
+	delete m_text;
 
 	AudioManager::Instance()->Clear();
 	TextureManager::Instance()->Clear();
@@ -255,12 +253,10 @@ void Game::Init()
 
 	FontManager::Instance()->Load("font_main", "Assets/Fonts/quite_magical.ttf", 64);
 
-
 	m_background = new Parallax(350.0f);
 	m_player = new Player();
 	m_opossum = new Opossum();
 	m_eagle = new Eagle();
-
 	m_text = new Text("font_main", SDL_Color{255, 255, 255, 255});
 
 	m_state = new MenuState();
@@ -273,8 +269,8 @@ void Game::OnKeyUp(KeyCode key)
 	if (state != NULL)
 	{
 		delete m_state;
-		m_state = state;
 
+		m_state = state;
 		m_state->Enter(*this);
 	}
 }
@@ -291,8 +287,8 @@ void Game::Update(const float dt)
 	if (state != NULL)
 	{
 		delete m_state;
-		m_state = state;
 
+		m_state = state;
 		m_state->Enter(*this);
 	}
 }

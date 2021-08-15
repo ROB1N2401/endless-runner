@@ -1,8 +1,9 @@
 #pragma once
 
-struct Collider;
+class Collider;
 
-struct CollisionManager
+class CollisionManager
 {
+public:
 	static bool CheckCollision(Collider *lhs, Collider *rhs);
 };

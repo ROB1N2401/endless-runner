@@ -1,6 +1,7 @@
 #pragma once
-
 #include "SDL.h"
+
+//The keycode class and function have been taken from Jerry's code
 
 enum class KeyCode
 {

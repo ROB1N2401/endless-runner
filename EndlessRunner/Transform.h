@@ -7,16 +7,15 @@ enum class PivotPoint
 	CENTERED
 };
 
-struct Transform
+class Transform
 {
 public:
-	PivotPoint pivotPoint;
-
 	Transform();
 	Transform(PivotPoint pivot_in);
 	~Transform();
 
-	void SetPosition(Helium::Vector2& vector);
+	PivotPoint pivotPoint;
+
 	void SetPosition(const float x, const float y);
 	void SetScale(const float c);
 	void SetScale(const float x, const float y);
@@ -24,7 +23,6 @@ public:
 
 	void ChangePosition(Helium::Vector2& vector);
 	void ChangePosition(const float x, const float y);
-	void ChangeScale(const float x, const float y);
 
 	Helium::Vector2 GetPosition() const;
 	Helium::Vector2 GetScale() const;

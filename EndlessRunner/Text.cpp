@@ -5,11 +5,6 @@
 
 Text::Text() : transform(PivotPoint::CENTERED), text(""), m_color(SDL_Color{0, 0, 0, 0}), m_font(nullptr) {}
 
-Text::Text(const std::string& id_in) : transform(PivotPoint::CENTERED), text(""), m_color(SDL_Color{ 255, 255, 255, 255 })
-{
-	m_font = FontManager::Instance()->GetFont(id_in);
-}
-
 Text::Text(const std::string& id_in, SDL_Color color_in) : transform(PivotPoint::CENTERED), text("")
 {
 	m_font = FontManager::Instance()->GetFont(id_in);

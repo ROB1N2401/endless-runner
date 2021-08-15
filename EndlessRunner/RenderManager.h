@@ -1,11 +1,16 @@
 #pragma once
-
 #include <string>
 #include "Screen.h"
 #include "Sprite.h"
 #include "Text.h"
 #include "Transform.h"
 #include "SDL_image.h"
+
+/* 
+As camera has been implemented only and only because of the screen shake effect, I was comforable
+with creating a big bunch of private variables for screen shake effect inside it, as well as implementing 
+relevent methods there 
+*/
 
 class Camera
 {
@@ -29,13 +34,12 @@ private:
 	int m_easingDirection;
 	Transform m_transform;
 	static Camera* s_Instance;
-
 };
 
 class RenderManager
 {
 public:
-	static RenderManager* Instance() { return m_Instance = (m_Instance != nullptr) ? m_Instance : new RenderManager(); };
+	static RenderManager* Instance() { return s_Instance = (s_Instance != nullptr) ? s_Instance : new RenderManager(); };
 
 	SDL_Renderer* GetRenderer();
 	void Init(Screen& screen_in);
@@ -47,5 +51,5 @@ public:
 
 private:
 	SDL_Renderer* m_renderer;
-	static RenderManager* m_Instance;
+	static RenderManager* s_Instance;
 };

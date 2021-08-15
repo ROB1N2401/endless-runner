@@ -18,8 +18,6 @@ Transform::Transform(PivotPoint pivot_in)
 
 Transform::~Transform() {}
 
-void Transform::SetPosition(Helium::Vector2& vector) { position = vector; }
-
 void Transform::SetPosition(const float x, const float y)
 {
 	position.x_ = x;
@@ -46,12 +44,6 @@ void Transform::ChangePosition(const float x, const float y)
 {
 	position.x_ += x;
 	position.y_ += y;
-}
-
-void Transform::ChangeScale(const float x, const float y)
-{
-	scale.x_ = +x;
-	scale.y_ = +y;
 }
 
 Helium::Vector2 Transform::GetPosition() const { return position; }

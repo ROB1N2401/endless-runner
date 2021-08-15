@@ -10,12 +10,12 @@ Player::Player()
 	transform.SetPosition(0, defaultPos);
 	transform.SetScale(3.f, 3.f);
 	
-	int x = transform.GetPosition().x_;
-	int y = transform.GetPosition().y_;
-	int w = 18 * transform.GetScale().x_;
-	int h = 22 * transform.GetScale().y_;
-	int x_offset = 6 * transform.GetScale().x_;
-	int y_offset = 10 * transform.GetScale().y_;
+	int x = static_cast<int>(transform.GetPosition().x_);
+	int y = static_cast<int>(transform.GetPosition().y_);
+	int w = static_cast<int>(18.f * transform.GetScale().x_);
+	int h = static_cast<int>(22.f * transform.GetScale().y_);
+	int x_offset = static_cast<int>(6.f * transform.GetScale().x_);
+	int y_offset = static_cast<int>(10.f * transform.GetScale().y_);
 	collider = new Collider(x, y, w, h, x_offset, y_offset);
 
 	isAlive = true;
@@ -34,8 +34,8 @@ void Player::OnKeyUp(KeyCode key)
 	if (state != NULL)
 	{
 		delete m_state;
-		m_state = state;
 
+		m_state = state;
 		m_state->Enter(*this);
 	}
 }
@@ -43,21 +43,18 @@ void Player::OnKeyUp(KeyCode key)
 void Player::Reset()
 {
 	delete m_state;
+
 	m_state = new RunningState();
 	m_state->Enter(*this);
-
-	transform.SetPosition(0, defaultPos);
-	transform.SetScale(3.f);
-	transform.SetRotation(0.f);
 }
 
 void Player::Update(const float dt)
 {
-	collider->SetPosition(this->transform.GetPosition().x_, this->transform.GetPosition().y_);
+	collider->SetPosition(static_cast<int>(this->transform.GetPosition().x_), static_cast<int>(this->transform.GetPosition().y_));
 	PlayerState* state = m_state->Update(*this, dt);
 	if (state != NULL)
 	{
-		delete m_state;
+ 		delete m_state;
 		m_state = state;
 
 		m_state->Enter(*this);
@@ -72,15 +69,15 @@ void Player::SetDeathState()
 	m_state->Enter(*this);
 }
 
+PlayerState::PlayerState() { stateAnimation = nullptr; }
+
 PlayerState::~PlayerState() {}
 
 #pragma region RunningState
 RunningState::RunningState() 
-{
-	stateAnimation = new Animation(100, "player_run", "Resources/RunningAnimation.txt");
+{ 
+	stateAnimation = new Animation(100, "player_run", "Resources/RunningAnimation.txt"); 
 }
-
-RunningState::~RunningState() {}
 
 void RunningState::Enter(Player& player_in)
 {
@@ -92,13 +89,14 @@ PlayerState* RunningState::OnKeyUp(Player& player_in, KeyCode key)
 {
 	if (key == KeyCode::SPACE)
 		return new JumpingState();
-	return nullptr;
 
+	return nullptr;
 }
 
 PlayerState* RunningState::Update(Player& player_in, const float dt)
 {
 	player_in.animation->Update();
+
 	return nullptr;
 }
 #pragma endregion
@@ -106,11 +104,9 @@ PlayerState* RunningState::Update(Player& player_in, const float dt)
 #pragma region JumpingState
 JumpingState::JumpingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -80.0f)
 {
-	isFallingDown = false;
+	m_isFallingDown = false;
 	stateAnimation = new Animation(1000, "player_jump", "Resources/JumpingAnimation.txt");
 }
-
-JumpingState::~JumpingState() {}
 
 void JumpingState::Enter(Player& player_in)
 {
@@ -128,10 +124,10 @@ PlayerState* JumpingState::Update(Player& player_in, const float dt)
 	Helium::Vector2 dvelocity = m_gravity * dt * 10.f;
 	m_velocity = m_velocity + dvelocity;
 
-	if (!isFallingDown && m_velocity.y_ > 0)
+	if (!m_isFallingDown && m_velocity.y_ > 0)
 	{
 		player_in.animation->SwitchFrames();
-		isFallingDown = true;
+		m_isFallingDown = true;
 	}
 
 	if (player_in.transform.GetPosition().y_ > Player::defaultPos)
@@ -146,8 +142,6 @@ DyingState::DyingState() : m_gravity(0.0f, 9.8f), m_velocity(0.0f, -50.0f)
 {
 	stateAnimation = new Animation(400, "player_die", "Resources/DyingAnimation.txt");
 }
-
-DyingState::~DyingState() {}
 
 void DyingState::Enter(Player& player_in)
 {

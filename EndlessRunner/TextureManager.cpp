@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-TextureManager* TextureManager::m_Instance = nullptr;
+TextureManager* TextureManager::s_Instance = nullptr;
 
 bool TextureManager::Load(const std::string& id_in, const std::string& imageFileName_in)
 {
@@ -17,15 +17,15 @@ bool TextureManager::Load(const std::string& id_in, const std::string& imageFile
 		return false;
 	}
 
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(RenderManager::Instance()->GetRenderer(), surface);
+	SDL_Texture* m_texture = SDL_CreateTextureFromSurface(RenderManager::Instance()->GetRenderer(), surface);
 	SDL_FreeSurface(surface);
-	if (texture == nullptr)
+	if (m_texture == nullptr)
 	{
 		SDL_Log("Failed to create a surface out of sprite: %s", SDL_GetError());
 		return false;
 	}
 
-	TextureMap[id_in] = texture;
+	TextureMap[id_in] = m_texture;
 	return true;
 }
 

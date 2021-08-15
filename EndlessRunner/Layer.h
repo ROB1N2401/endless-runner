@@ -1,21 +1,20 @@
 #pragma once
-
 #include <string>
 #include "Sprite.h"
 #include "Transform.h"
 
 struct Image
 {
+    void Render();
+	
 	Sprite sprite;
 	Transform transform;
-
-    void Render();
 };
 
 class Layer
 {
 public:
-	Layer(const float scrollRatio_in);
+	Layer();
 	Layer(const float scrollRatio_in, const std::string& texture_id_in, const std::string& spriteDataFileName_in);
 
 private:

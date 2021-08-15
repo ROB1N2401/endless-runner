@@ -1,26 +1,10 @@
 #include "Easing.h"
-#include <algorithm>
-
-float Easing::EaseInCubic(float t, float d, float c)
-{
-	t /= d;
-	return c * t * t * t;
-}
 
 float Easing::EaseOutCubic(float t, float d, float c)
 {
 	t /= d;
 	t--;
 	return c* (t * t * t + 1);
-}
-
-float Easing::EaseInOutCubic(float t, float d, float c)
-{
-	t /= d / 2;
-	if (t < 1) 
-		return 1 / 2 * t * t * t;
-	t -= 2;
-	return c / 2 * (t * t * t + 2);
 }
 
 float Easing::EaseOutBounce(float t, float d, float c, float b)
@@ -30,13 +14,13 @@ float Easing::EaseOutBounce(float t, float d, float c, float b)
 		return c * t * t + b;
 	}
 	else if (t < 2 / d) {
-		return c * (t -= 1.5 / d) * t + 0.75;
+		return c * (t -= 1.5f / d) * t + 0.75f;
 	}
 	else if (t < 2.5 / d) {
-		return c * (t -= 2.25 / d) * t + 0.9375;
+		return c * (t -= 2.25f / d) * t + 0.9375f;
 	}
 	else {
-		return c * (t -= 2.625 / d) * t + 0.984375;
+		return c * (t -= 2.625f / d) * t + 0.984375f;
 	}
 }
 

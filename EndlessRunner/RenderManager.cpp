@@ -3,12 +3,10 @@
 #include "FontManager.h"
 #include "Easing.h"
 
+#pragma region Camera
 Camera* Camera::s_Instance = nullptr;
 
-Camera::Camera() : m_shakeDuration(2.0f), m_shakeStrength(5.0f)
-{
-	Reset();
-}
+Camera::Camera() : m_shakeDuration(2.0f), m_shakeStrength(5.0f) { Reset(); }
 
 void Camera::Update(const float dt)
 {
@@ -34,6 +32,7 @@ void Camera::Update(const float dt)
 		m_transform.SetScale(1.0f);
 		m_transform.SetRotation(0.0f);
 	}
+
 	m_shakeTime += dt;
 }
 
@@ -50,14 +49,11 @@ void Camera::Reset()
 }
 
 void Camera::SetShakeStrength(float shakeValue_in) { m_shakeStrength = shakeValue_in; }
+#pragma endregion
 
+RenderManager* RenderManager::s_Instance = nullptr;
 
-RenderManager* RenderManager::m_Instance = nullptr;
-
-SDL_Renderer* RenderManager::GetRenderer()
-{
-	return m_renderer;
-}
+SDL_Renderer* RenderManager::GetRenderer() { return m_renderer; }
 
 void RenderManager::Init(Screen& screen_in)
 {
@@ -90,6 +86,7 @@ void RenderManager::Render(const Sprite& sprite_in, const Transform& transform_i
 void RenderManager::Render(Text* text_in)
 {
 	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(text_in->GetFont(), text_in->text.c_str(), text_in->GetColor(), 512);
+
 	if (textSurface == nullptr)
 	{
 		SDL_Log("Unable to render text surface: %s", TTF_GetError());
@@ -100,12 +97,12 @@ void RenderManager::Render(Text* text_in)
 		SDL_Texture* textTexture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
 		SDL_Rect srcRect = { 0, 0, textSurface->w, textSurface->h };
 		auto scale = text_in->transform.GetScale();
-		int w = textSurface->w * scale.x_;
-		int h = textSurface->h * scale.y_;
+		int w = static_cast<int>(textSurface->w * scale.x_);
+		int h = static_cast<int>(textSurface->h * scale.y_);
 		Helium::Vector2 position;
 		position.x_ = text_in->transform.GetPosition().x_ - w / 2;
 		position.y_ = text_in->transform.GetPosition().y_ - h / 2;
-		SDL_Rect dstRect = { position.x_, position.y_, w, h };
+		SDL_Rect dstRect = { static_cast<int>(position.x_), static_cast<int>(position.y_), w, h };
 		SDL_RenderCopy(m_renderer, textTexture, &srcRect, &dstRect);
 		SDL_FreeSurface(textSurface);
 		SDL_DestroyTexture(textTexture);
@@ -125,8 +122,5 @@ void RenderManager::Clear(int r, int g, int b, int a)
 	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 }
 
-void RenderManager::Present()
-{
-	SDL_RenderPresent(m_renderer);
-}
+void RenderManager::Present() {	SDL_RenderPresent(m_renderer); }
 

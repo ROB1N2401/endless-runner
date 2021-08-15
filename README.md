@@ -5,13 +5,15 @@ Endless Runner
 
 Enter your name(s) here (All team members):
 
-| Name | Email | GitHub User Name |
-| - | - | - |
-| (insert name) | (insert email) | (insert github username) |
+| Name         | Email                           | GitHub User Name ||
+| Ivan Fomenko | Ivan.Fomenko.1327@student.uu.se | ROB1N2401        |
 
 ## Instructions for Teacher
 
-(insert, if needed, instructions for teacher here)
+Controls:
+	P - Pause;
+	SPACE - Jump;
+	ESC - Close application;
 
 ## Introduction 
 

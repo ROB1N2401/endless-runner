@@ -1,9 +1,9 @@
 #include "AudioManager.h"
 #include "SDL.h"
 
-AudioManager* AudioManager::m_Instance = nullptr;
+AudioManager* AudioManager::s_Instance = nullptr;
 
-AudioManager::AudioManager() 
+AudioManager::AudioManager() : m_volume(128)
 {
 	if (Mix_OpenAudio(FREQ, MIX_DEFAULT_FORMAT, 2, CHUNK_SIZE) < 0)
 		SDL_Log("Failed to initialize AudioManager: %s", Mix_GetError());
@@ -48,32 +48,10 @@ void AudioManager::PlayMusic(const std::string& id_in)
 		SDL_Log("Failed to playback music: %s, %s", id_in.c_str(), Mix_GetError());
 }
 
-Mix_Music* AudioManager::GetMusic(const std::string& id_in)
-{
-	if (!(MusicMap.count(id_in) > 0))
-	{
-		SDL_Log("Failed to find music associated with the next id: %s, %s", id_in.c_str(), Mix_GetError());
-		return nullptr;
-	}
-	else
-		return MusicMap.find(id_in)->second;
-}
-
 void AudioManager::PlaySound(const std::string& id_in)
 {
 	if (Mix_PlayChannel(-1, SoundMap[id_in], 0) == -1)
 		SDL_Log("Failed to playback sound: %s, %s", id_in.c_str(), Mix_GetError());
-}
-
-Mix_Chunk* AudioManager::GetSound(const std::string& id_in)
-{
-	if (!(SoundMap.count(id_in) > 0))
-	{
-		SDL_Log("Failed to find music associated with the next id: %s, %s", id_in.c_str(), Mix_GetError());
-		return nullptr;
-	}
-	else
-		return SoundMap.find(id_in)->second;
 }
 
 void AudioManager::SetVolume(int volume_in) 
