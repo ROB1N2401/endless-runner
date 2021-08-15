@@ -1,3 +1,4 @@
+#include <fstream>
 #include <sstream>
 #include "AudioManager.h"
 #include "TextureManager.h"
@@ -60,7 +61,7 @@ GameState* MenuState::Update(Game& game_in, const float dt)
 	m_easingTime += dt;
 
 	game_in.m_background->Update(dt);
-	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f);
+	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f * game_in.m_uiScaleModifier);
 	return nullptr;
 }
 #pragma endregion
@@ -73,7 +74,7 @@ PlayState::~PlayState() {}
 void PlayState::Enter(Game& game_in)
 {
 	game_in.m_text->text = "SCORE: ";
-	game_in.m_text->transform.SetPosition(57.6f, 25.6f);
+	game_in.m_text->transform.SetPosition(76.8f, 37.4f);
 	game_in.m_text->SetColor(SDL_Color{ 0, 255, 255, 255 });
 }
 
@@ -92,7 +93,7 @@ GameState* PlayState::Update(Game& game_in, const float dt)
 
 	game_in.m_score += (D_TIME * 100.f);
 	game_in.m_text->text = "Score: " + std::to_string(static_cast<int>(game_in.m_score));
-	game_in.m_text->Update(dt, m_easingTime, 0.25f, 0.5f);
+	game_in.m_text->Update(dt, m_easingTime, 0.25f, 0.5f * game_in.m_uiScaleModifier);
 
 	game_in.m_background->Update(dt);
 	game_in.m_opossum->Update(dt);
@@ -129,7 +130,7 @@ GameState* PauseState::Update(Game& game_in, const float dt)
 {
 	m_easingTime += dt;
 
-	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f);
+	game_in.m_text->Update(dt, m_easingTime, 1.5f, 1.f * game_in.m_uiScaleModifier);
 	return nullptr;
 }
 #pragma endregion
@@ -162,7 +163,7 @@ GameState* DeathState::Update(Game& game_in, const float dt)
 	m_easingTime += dt;
 
 	Camera::Instance()->Update(dt);
-	game_in.m_text->Update(dt, m_easingTime, 1.5f, 0.75f);
+	game_in.m_text->Update(dt, m_easingTime, 1.5f, 0.7f * game_in.m_uiScaleModifier);
 	game_in.m_player->Update(dt);
 	return nullptr;
 }
@@ -171,7 +172,7 @@ GameState* DeathState::Update(Game& game_in, const float dt)
 #pragma endregion
 
 
-Game::Game() : m_screen(this), m_quit(false), m_score(0.0f)
+Game::Game() : m_screen(this), m_quit(false), m_score(0.0f), m_uiScaleModifier(1.0f)
 {
 }
 
@@ -193,27 +194,46 @@ Game::~Game()
 	SDL_Quit();
 }
 
-void Game::OnKeyUp(KeyCode key)
+bool Game::ReadConfig()
 {
-	GameState* state = m_state->OnKeyUp(*this, key);
-	if (state != NULL)
+	std::ifstream stream_;
+	stream_.open("Resources/Config.ini");
+	std::string line_;
+	std::vector<std::string> values;
+	while (std::getline(stream_, line_))
 	{
-		delete m_state;
-		m_state = state;
-
-		m_state->Enter(*this);
+		std::stringstream ss(line_);
+		std::string value;
+		for (int i = 0; i < 3; i++)
+			ss >> value;
+		values.push_back(value);
 	}
-}
 
-void Game::OnKeyDown(KeyCode key)
-{
-	if (key == KeyCode::ESCAPE)
-		m_quit = true;
-}
+	float uiScale = std::stof(values[0]) / 100.f;
+	if (0.f <= uiScale && uiScale <= 2.f)
+		m_uiScaleModifier = uiScale;
+	else
+		return false;
 
+	int volume = std::stoi(values[1]);
+	if (0 <= volume && volume <= 128)
+		AudioManager::Instance()->SetVolume(volume);
+	else
+		return false;
+
+	float screenShakeStrength = std::stof(values[2]);
+	if (0.f <= screenShakeStrength && screenShakeStrength <= 10.f)
+		Camera::Instance()->SetShakeStrength(screenShakeStrength);
+	else
+		return false;
+
+	return true;
+}
 
 void Game::Init()
 {
+	m_quit = !ReadConfig();
+
 	m_screen.Init();
 	RenderManager::Instance()->Init(m_screen);
 
@@ -235,6 +255,7 @@ void Game::Init()
 
 	FontManager::Instance()->Load("font_main", "Assets/Fonts/quite_magical.ttf", 64);
 
+
 	m_background = new Parallax(350.0f);
 	m_player = new Player();
 	m_opossum = new Opossum();
@@ -244,6 +265,24 @@ void Game::Init()
 
 	m_state = new MenuState();
 	m_state->Enter(*this);
+}
+
+void Game::OnKeyUp(KeyCode key)
+{
+	GameState* state = m_state->OnKeyUp(*this, key);
+	if (state != NULL)
+	{
+		delete m_state;
+		m_state = state;
+
+		m_state->Enter(*this);
+	}
+}
+
+void Game::OnKeyDown(KeyCode key)
+{
+	if (key == KeyCode::ESCAPE)
+		m_quit = true;
 }
 
 void Game::Update(const float dt)
@@ -266,7 +305,6 @@ void Game::Render()
 
 	RenderManager::Instance()->Present();
 }
-
 
 void Game::Run()
 {

@@ -20,6 +20,7 @@ public:
 	void PlaySound(const std::string& id_in);
 	Mix_Chunk* GetSound(const std::string& id_in);
 
+	void SetVolume(int volume_in);
 	void Clear();
 
 	std::map<std::string, Mix_Chunk*> SoundMap;
@@ -27,5 +28,6 @@ public:
 
 private:
 	AudioManager();
+	int m_volume;
 	static AudioManager* m_Instance;
 };

@@ -49,9 +49,7 @@ void Camera::Reset()
 	m_easingDirection = 1;
 }
 
-void Camera::SetShakeStrength(float shakeValue_in)
-{
-}
+void Camera::SetShakeStrength(float shakeValue_in) { m_shakeStrength = shakeValue_in; }
 
 
 RenderManager* RenderManager::m_Instance = nullptr;

@@ -37,6 +37,7 @@ bool AudioManager::LoadSound(const std::string& id_in, const std::string& soundF
 		return false;
 	}
 
+	Mix_VolumeChunk(sound, m_volume);
 	SoundMap[id_in] = sound;
 	return true;
 }
@@ -73,6 +74,12 @@ Mix_Chunk* AudioManager::GetSound(const std::string& id_in)
 	}
 	else
 		return SoundMap.find(id_in)->second;
+}
+
+void AudioManager::SetVolume(int volume_in) 
+{ 
+	Mix_VolumeMusic(volume_in);
+	m_volume = volume_in;
 }
 
 void AudioManager::Clear()

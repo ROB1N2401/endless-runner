@@ -85,6 +85,7 @@ private:
 	friend class DeathState;
 
 	bool m_quit;
+	float m_uiScaleModifier;
 	float m_score;
 	Screen m_screen;
 	GameState* m_state;
@@ -96,9 +97,11 @@ private:
 	Text* m_text; 
 
 	//Game Loop
-	void OnKeyUp(KeyCode key);
-	void OnKeyDown(KeyCode key);
+	bool ReadConfig();
 	void Init();
+	void OnKeyDown(KeyCode key);
+	void OnKeyUp(KeyCode key);
 	void Render();
 	void Update(const float dt);
+
 };

@@ -37,6 +37,8 @@ void SdlManager::Init()
 
 	int channels = Mix_AllocateChannels(16);
 	printf("Channels allocated: %i\n", channels);
+
+	printf("In case game crashes, make sure the settings are properly set inside Config file \n");
 }
 
 SdlManager::~SdlManager()
