@@ -82,7 +82,7 @@ private:
 	Text* m_text; 
 
 	//Game Loop
-	bool ReadConfig();
+	void ReadConfig();
 	void Init();
 	void OnKeyUp(KeyCode key);
 	void OnKeyDown(KeyCode key);

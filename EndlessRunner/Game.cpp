@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <sstream>
 #include "AudioManager.h"
@@ -6,8 +7,6 @@
 #include "RenderManager.h"
 #include "CollisionManager.h"
 #include "Game.h"
-
-#define D_TIME 0.016f
 
 #pragma region FSM
 GameState::GameState() { m_easingTime = 0.f; }
@@ -87,7 +86,7 @@ GameState* PlayState::Update(Game& game_in, const float dt)
 {
 	m_easingTime += dt;
 
-	game_in.m_score += (D_TIME * 100.f);
+	game_in.m_score += (dt * 100.f);
 	game_in.m_text->text = "Score: " + std::to_string(static_cast<int>(game_in.m_score));
 	game_in.m_text->Update(dt, m_easingTime, 0.25f, 0.5f * game_in.m_uiScaleModifier);
 
@@ -192,7 +191,7 @@ Game::~Game()
 	SDL_Quit();
 }
 
-bool Game::ReadConfig()
+void Game::ReadConfig()
 {
 	std::ifstream stream_;
 	stream_.open("Resources/Config.ini");
@@ -206,31 +205,24 @@ bool Game::ReadConfig()
 			ss >> value;
 		values.push_back(value);
 	}
+	stream_.close();
 
 	float uiScale = std::stof(values[0]) / 100.f;
-	if (0.f <= uiScale && uiScale <= 2.f)
-		m_uiScaleModifier = uiScale;
-	else
-		return false;
+	uiScale = std::clamp(uiScale, 0.f, 2.f);
+	m_uiScaleModifier = uiScale;
 
 	int volume = std::stoi(values[1]);
-	if (0 <= volume && volume <= 128)
-		AudioManager::Instance()->SetVolume(volume);
-	else
-		return false;
+	volume = std::clamp(volume, 0, 128);
+	AudioManager::Instance()->SetVolume(volume);
 
 	float screenShakeStrength = std::stof(values[2]);
-	if (0.f <= screenShakeStrength && screenShakeStrength <= 10.f)
-		Camera::Instance()->SetShakeStrength(screenShakeStrength);
-	else
-		return false;
-
-	return true;
+	screenShakeStrength = std::clamp(screenShakeStrength, 0.f, 10.f);
+	Camera::Instance()->SetShakeStrength(screenShakeStrength);
 }
 
 void Game::Init()
 {
-	m_quit = !ReadConfig();
+	ReadConfig();
 
 	m_screen.Init();
 	RenderManager::Instance()->Init(m_screen);
@@ -238,7 +230,6 @@ void Game::Init()
 	AudioManager::Instance()->LoadMusic("bg_music", "Assets/Audio/bgmusic.wav");
 	AudioManager::Instance()->LoadSound("jump_sound", "Assets/Audio/jump.wav");
 	AudioManager::Instance()->LoadSound("death_sound", "Assets/Audio/death.wav");
-	AudioManager::Instance()->LoadSound("pickup_sound", "Assets/Audio/pickup.wav");
 
 	TextureManager::Instance()->Load("player_run", "Assets/Spritesheets/player-run.png");
 	TextureManager::Instance()->Load("player_die", "Assets/Spritesheets/player-die.png");
@@ -283,7 +274,7 @@ void Game::OnKeyDown(KeyCode key)
 
 void Game::Update(const float dt)
 {
-	GameState* state = m_state->Update(*this, D_TIME);
+	GameState* state = m_state->Update(*this, dt);
 	if (state != NULL)
 	{
 		delete m_state;
@@ -306,6 +297,10 @@ void Game::Run()
 {
 	Init();
 
+	Uint32 start = SDL_GetTicks();
+	Uint32 current = start;
+	Uint32 previous = start;
+
 	SDL_Event event;
 	while (!m_quit)
 	{
@@ -318,7 +313,12 @@ void Game::Run()
 			}
 		}
 
-		Update(D_TIME);
+		previous = current;
+		current = SDL_GetTicks();
+		Uint32 dticks = current - previous;
+		float dtime = dticks / 1000.f;
+
+		Update(dtime);
 		Render();
 	}
 }

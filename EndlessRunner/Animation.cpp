@@ -34,6 +34,7 @@ Animation::Animation(const Uint32 animationSpeed_in, const std::string& texture_
 	for (int i : frames_)
 		frames.push_back(spritesheet.sprites[i]);
 	m_framesAmount = static_cast<int>(frames.size());
+	stream_.close();
 }
 
 void Animation::SwitchFrames()

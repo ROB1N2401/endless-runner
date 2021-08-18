@@ -34,6 +34,7 @@ void Sprite::SetSource(const std::string& spriteDataFileName_in)
 	std::vector<std::string> words;
 	std::string word;
 	while (ss >> word) words.push_back(word);
+	stream.close();
 
 	x = std::stoi(words[0]);
 	y = std::stoi(words[1]);

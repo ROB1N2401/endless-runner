@@ -19,6 +19,6 @@ SpriteSheet ReadSpritesheet(const std::string& texture_id_in, const std::string&
 		sprite.SetSource(std::stoi(words[0]), std::stoi(words[1]), std::stoi(words[2]), std::stoi(words[3]));
 		spritesheet_.sprites.push_back(sprite);
 	}
-
+	stream_.close();
 	return spritesheet_;
 }
